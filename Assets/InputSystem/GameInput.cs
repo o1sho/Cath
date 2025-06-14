@@ -7,6 +7,8 @@ public class GameInput : MonoBehaviour
 
     private InputSystem_Actions _inputSystem;
 
+    public InputSystem_Actions InputSystem => _inputSystem;
+
     private void Awake() {
         Instance = this;
 
@@ -18,4 +20,5 @@ public class GameInput : MonoBehaviour
         Vector2 inputVector = _inputSystem.Player.Move.ReadValue<Vector2>();
         return inputVector;
     }
+
 }

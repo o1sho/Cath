@@ -5,21 +5,25 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float maxMoveSpeed = 5f;
+    [SerializeField] private float acceleration = 50f;
+    [SerializeField] private float deceleration = 30f;
 
     private Vector2 _inputVector;
+    private Vector2 _velocity;
     private Rigidbody2D _rigidbody;
-    private float _minMoveSpeed = 0.1f;
 
-    [SerializeField] private bool _isIdle = false;
-    [SerializeField] private bool _isMovingSide = false;
-    [SerializeField] private bool _isMovingBack = false;
-    [SerializeField] private bool _isMovingFront = false;
+    public Rigidbody2D Rigidbody => _rigidbody;
+    public Vector3 CurrentSpawnPoint;
 
 
     private void Awake() {
         Instance = this;
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start() {
+
     }
 
     private void Update() {
@@ -31,37 +35,20 @@ public class Player : MonoBehaviour
     }
 
     private void HandleMovement() {
-        _rigidbody.MovePosition(_rigidbody.position + _inputVector * (moveSpeed * Time.fixedDeltaTime));
+        Vector2 desiredVelocity = _inputVector * maxMoveSpeed;
 
-
-        if (Mathf.Abs(_inputVector.x) > _minMoveSpeed || Mathf.Abs(_inputVector.y) > _minMoveSpeed) {
-            _isIdle = false;
+        if (_inputVector.magnitude > 0) {
+            _velocity = Vector2.MoveTowards(_velocity, desiredVelocity, acceleration * Time.fixedDeltaTime);
         }
         else {
-            _isIdle = true;
+            _velocity = Vector2.MoveTowards(_velocity, Vector2.zero, acceleration * Time.fixedDeltaTime);
         }
 
-        if (_inputVector.y > 0) {
-            _isMovingBack = true;
-            _isMovingFront = false;
-        }
-        if (_inputVector.y < 0) {
-            _isMovingBack = false;
-            _isMovingFront = true;
-        }
-
-        if (Mathf.Abs(_inputVector.x) > _minMoveSpeed && _inputVector.y == 0) {
-            _isMovingSide = true;
-        }
-        if (Mathf.Abs(_inputVector.x) == 0 && _inputVector.y == 0) {
-            _isMovingSide = false;
-            _isMovingBack = false;
-            _isMovingFront = false;
-        }
+        _rigidbody.linearVelocity = _velocity;
     }
 
-    public bool IsIdle() { return _isIdle; }
-    public bool IsMovingSide() {return _isMovingSide; }
-    public bool IsMovingBack() { return _isMovingBack; }
-    public bool IsMovingFront() { return _isMovingFront; }
+    public void Respawn() {
+        transform.position = CurrentSpawnPoint;
+    }
+
 }
