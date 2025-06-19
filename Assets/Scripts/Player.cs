@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : StateMachine
 {
     public static Player Instance { get; private set; }
 
@@ -22,72 +22,57 @@ public class Player : MonoBehaviour
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
 
-    public Rigidbody2D Rigidbody => _rigidbody;
-    public Vector3 CurrentSpawnPoint;
+    [HideInInspector] public Rigidbody2D Rigidbody => _rigidbody;
+    public Vector3 CurrentSpawnPoint { get => _currentSpawnPoint; set => _currentSpawnPoint = value; }
+    public Vector2 InputVector { get => _inputVector; private set => _inputVector = value; }
+    public Vector2 Velocity { get => _velocity; set => _velocity = value; }
+    public float DashCooldownTimer { get; set; }
+
+    public float MaxMoveSpeed => maxMoveSpeed;
+    public float Acceleration => acceleration;
+    public float DashSpeed => dashSpeed;
+    public float DashDuration => dashDuration;
+    public float DashCooldown => dashCooldown;
 
 
     private void Awake() {
         Instance = this;
         _rigidbody = GetComponent<Rigidbody2D>();
+
+        ChangeState(new PlayerIdleState(this));
     }
 
-    private void Start() {
-
-    }
-
-    private void Update() {
-        _inputVector = GameInput.Instance.GetMovementVector();
-
-        if (!_isDashing && _dashCooldownTimer <= 0 && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame()) {
-            HandleDash();
-        }
-
-        UpdateDashTimer();
-    }
 
     private void FixedUpdate() {
-        
-        HandleMovement();
-        _rigidbody.linearVelocity = _velocity;
+        _rigidbody.linearVelocity = _velocity; // Применяем скорость
     }
-
-    private void HandleMovement() {
-        Vector2 desiredVelocity = _inputVector * maxMoveSpeed;
-
-        if (_inputVector.magnitude > 0) {
-            _velocity = Vector2.MoveTowards(_velocity, desiredVelocity, acceleration * Time.fixedDeltaTime);
-        }
-        else {
-            _velocity = Vector2.MoveTowards(_velocity, Vector2.zero, acceleration * Time.fixedDeltaTime);
-        }
-    }
-
-    //
-    private void HandleDash() {
-        if (_inputVector.magnitude > 0) {
-            _isDashing = true;
-            _dashTimeLeft = dashDuration;
-            _dashCooldownTimer = dashCooldown;
-            _velocity = _inputVector * dashSpeed;
-        }
-    }
-
-    private void UpdateDashTimer() {
-        if (_isDashing) {
-            _dashTimeLeft -= Time.deltaTime;
-            if (_dashTimeLeft <= 0) {
-                _isDashing = false;
-            }
-        }
-
-        if (_dashCooldownTimer > 0) {
-            _dashCooldownTimer -= Time.deltaTime;
-        }
-    }
-    //
 
     public void Respawn() {
-        transform.position = CurrentSpawnPoint;
+        transform.position = _currentSpawnPoint;
+        _velocity = Vector2.zero;
+        DashCooldownTimer = 0f;
+        ChangeState(new PlayerIdleState(this));
+    }
+
+    public void UpdateInput() {
+        Vector2 rawInput = GameInput.Instance.GetMovementVector();
+        _inputVector = GetOrthogonalInput(rawInput);
+    }
+
+    private Vector2 GetOrthogonalInput(Vector2 rawInput) {
+        // Если нет ввода, возвращаем нулевой вектор
+        if (rawInput.magnitude == 0)
+            return Vector2.zero;
+
+        // Определяем доминирующее направление
+        if (Mathf.Abs(rawInput.x) > Mathf.Abs(rawInput.y)) {
+            // Движение влево/вправо
+            return new Vector2(Mathf.Sign(rawInput.x), 0);
+        }
+        else {
+            // Движение вверх/вниз
+            return new Vector2(0, Mathf.Sign(rawInput.y));
+        }
     }
 
 }

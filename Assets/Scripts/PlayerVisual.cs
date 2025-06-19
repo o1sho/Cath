@@ -6,11 +6,14 @@ public class PlayerVisual : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private const string IS_IDLE = "isIdle";
-    private const string IS_VELOCITY_X_ZERO = "isVelocityXZero";
-    private const string IS_VELOCITY_Y_ZERO = "isVelocityYZero";
-
-    private bool _isVelocityXZero;
-    private bool _isVelocityYZero;
+    private const string IS_MOVING = "isMoving";
+    private const string IS_DASHING = "isDashing";
+    private const string IS_DEAD = "isDead";
+    private const string IS_DASH_BACK = "isDashBack";
+    private const string IS_DASH_FRONT = "isDashFront";
+    private const string IS_DASH_SIDE = "isDashSide";
+    private const string VELOCITY_X = "velocityX";
+    private const string VELOCITY_Y = "velocityY";
 
     private void Awake() {
         _animator = GetComponent<Animator>();
@@ -18,37 +21,30 @@ public class PlayerVisual : MonoBehaviour
     }
 
     private void Update() {
-        if (Player.Instance.Rigidbody.linearVelocity.magnitude == 0) _animator.SetTrigger(IS_IDLE);
+        var stateMachine = Player.Instance.GetComponent<StateMachine>();
+        var currentState = stateMachine.CurrentState;
 
-        if (Player.Instance.Rigidbody.linearVelocity.x == 0) {
-            _isVelocityXZero = true;
-        }
-        else {
-            _isVelocityXZero = false;
-        }
+        _animator.SetBool(IS_IDLE, currentState is PlayerIdleState);
+        _animator.SetBool(IS_MOVING, currentState is PlayerMovingState);
+        _animator.SetBool(IS_DASHING, currentState is PlayerDashingState);
+        _animator.SetBool(IS_DEAD, currentState is PlayerDeadState);
 
-        if (Player.Instance.Rigidbody.linearVelocity.y == 0) {
-            _isVelocityYZero = true;
-        }
-        else {
-            _isVelocityYZero = false;
-        }
-
-        _animator.SetFloat("velocityX", Mathf.Abs(Player.Instance.Rigidbody.linearVelocity.x));
-        _animator.SetFloat("velocityY", Player.Instance.Rigidbody.linearVelocity.y);
-        _animator.SetBool(IS_VELOCITY_X_ZERO, _isVelocityXZero);
-        _animator.SetBool(IS_VELOCITY_Y_ZERO, _isVelocityYZero);
-
+        _animator.SetFloat(VELOCITY_X, Mathf.Abs(Player.Instance.Rigidbody.linearVelocity.x));
+        _animator.SetFloat(VELOCITY_Y, Player.Instance.Rigidbody.linearVelocity.y);
 
         HandlePlayerFacingDirection();
     }
 
+    public void TriggerDashAnimation(string trigger) {
+        _animator.SetTrigger(trigger);
+    }
+
     private void HandlePlayerFacingDirection() {
-        if (Player.Instance.Rigidbody.linearVelocity.x > 0) {
-            _spriteRenderer.flipX = true;
+        if (Player.Instance.InputVector.x > 0) {
+            _spriteRenderer.flipX = true; // Вправо
         }
-        else {
-            _spriteRenderer.flipX = false;
+        else if (Player.Instance.InputVector.x < 0) {
+            _spriteRenderer.flipX = false; // Влево
         }
     }
 }

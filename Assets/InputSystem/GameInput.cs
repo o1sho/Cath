@@ -10,7 +10,15 @@ public class GameInput : MonoBehaviour
     public InputSystem_Actions InputSystem => _inputSystem;
 
     private void Awake() {
-        Instance = this;
+        if (Instance == null) {
+            Instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this) {
+            Destroy(gameObject);
+        }
+
+
 
         _inputSystem = new InputSystem_Actions();
         _inputSystem.Enable();
@@ -21,4 +29,7 @@ public class GameInput : MonoBehaviour
         return inputVector;
     }
 
+    void OnDisable() {
+        _inputSystem.Disable();
+    }
 }
