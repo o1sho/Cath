@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class PlayerDeadState : IState {
     private readonly Player _player;
+    private readonly PlayerVisual _visual;
 
     public PlayerDeadState(Player player) {
         _player = player;
+        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
     }
 
     public void Enter() {
-        _player.Velocity = Vector2.zero;
+        _player.Movement.Stop();
+        _visual.SetDeadState(isDead: true);
         Debug.Log("Player entered Dead state");
         GameManager.Instance.ChangeState(new GameMainMenuState(GameManager.Instance));
     }
@@ -19,5 +22,8 @@ public class PlayerDeadState : IState {
         }
     }
 
-    public void Exit() { }
+    public void Exit() {
+    }
 }
+
+

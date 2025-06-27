@@ -2,47 +2,37 @@ using UnityEngine;
 
 public class PlayerDashingState : IState {
     private readonly Player _player;
+    private readonly PlayerVisual _visual;
+
     private float _dashTimeLeft;
 
     public PlayerDashingState(Player player) {
         _player = player;
+        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
     }
 
     public void Enter() {
-        _dashTimeLeft = _player.DashDuration;
-        _player.Velocity = _player.InputVector * _player.DashSpeed;
-        _player.DashCooldownTimer = _player.DashCooldown;
+        _dashTimeLeft = _player.Dash.DashDuration;
+        _player.Dash.StartDash(_player.Movement.InputVector, _player.Movement);
 
-        // направление рывка
-        string dashTrigger;
-        if (_player.InputVector.y > 0.5f)
-            dashTrigger = "isDashBack";
-        else if (_player.InputVector.y < -0.5f)
-            dashTrigger = "isDashFront";
-        else
-            dashTrigger = "isDashSide";
+        string dashTrigger = _player.Movement.InputVector.y > 0.5f ? "isDashBack" :
+                            _player.Movement.InputVector.y < -0.5f ? "isDashFront" : "isDashSide";
 
-        // проверить, что PlayerVisual существует
-        var playerVisual = Player.Instance.GetComponentInChildren<PlayerVisual>();
-        if (playerVisual != null) {
-            playerVisual.TriggerDashAnimation(dashTrigger);
-        }
-        else {
-            Debug.LogWarning("PlayerVisual component not found on Player!");
-        }
+        _visual.TriggerDashAnimation(dashTrigger);
+        _visual.SetFacingDirection(_player.Movement.InputVector);
 
         Debug.Log("Player entered Dashing state");
     }
 
     public void Update(float deltaTime) {
-        _player.UpdateInput();
+        _player.Movement.UpdateInput();
         _dashTimeLeft -= deltaTime;
         if (_dashTimeLeft <= 0) {
-            _player.ChangeState(_player.InputVector.magnitude > 0 ? new PlayerMovingState(_player) : new PlayerIdleState(_player));
+            _player.ChangeState(_player.Movement.InputVector.magnitude > 0 ? new PlayerMovingState(_player) : new PlayerIdleState(_player));
         }
     }
 
     public void Exit() {
-        _player.Velocity = Vector2.zero;
+        _player.Movement.Stop();
     }
 }

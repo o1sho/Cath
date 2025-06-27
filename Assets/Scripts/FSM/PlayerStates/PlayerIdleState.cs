@@ -1,41 +1,52 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerIdleState : IState {
     private readonly Player _player;
+    private readonly PlayerVisual _visual;
 
     public PlayerIdleState(Player player) {
         _player = player;
+        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
     }
 
     public void Enter() {
-        _player.Velocity = Vector2.zero;
+        _player.Movement.Stop();
+
+        _visual.SetLocomotionState(isMoving: false, Mathf.Abs(_player.Movement.LastNonZeroInput.x), _player.Movement.LastNonZeroInput.y);
+        _visual.SetFacingDirection(_player.Movement.LastNonZeroInput);
+
         Debug.Log("Player entered Idle state");
     }
 
     public void Update(float deltaTime) {
-        _player.UpdateInput();
+        _player.Movement.UpdateInput();
 
-        // Переход в Moving
-        if (_player.InputVector.magnitude > 0) {
+        if (_player.Movement.InputVector.magnitude > 0) {
             _player.ChangeState(new PlayerMovingState(_player));
             return;
         }
 
-        // Переход в Dashing
-        if (_player.DashCooldownTimer <= 0 && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame() && _player.InputVector.magnitude > 0) {
+        if (_player.Dash.CanDash && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame() && _player.Movement.InputVector.magnitude > 0) {
             _player.ChangeState(new PlayerDashingState(_player));
             return;
         }
 
-        // Замедление
-        _player.Velocity = Vector2.MoveTowards(_player.Velocity, Vector2.zero, _player.Acceleration * deltaTime);
-
-        // Обновление таймера рывка
-        if (_player.DashCooldownTimer > 0) {
-            _player.DashCooldownTimer -= deltaTime;
+        if (_player.Throw.HeldItem != null && GameInput.Instance.InputSystem.Player.Throw.WasPressedThisFrame()) {
+            _player.ChangeState(new PlayerThrowingState(_player));
+            return;
         }
+
+
+        if (GameInput.Instance.InputSystem.Player.Interact.WasPressedThisFrame()) {
+            _player.ChangeState(new PlayerPickupState(_player));
+        }
+
+        _player.Dash.UpdateCooldown(deltaTime);
     }
 
-    public void Exit() { }
+    public void Exit() {
+
+    }
+
+
 }
