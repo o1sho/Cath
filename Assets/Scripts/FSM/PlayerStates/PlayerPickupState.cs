@@ -7,7 +7,7 @@ public class PlayerPickupState : IState
 
     private float _pickupTimeLeft;
 
-    private readonly float _pickupRadius = 0.7f;
+    private readonly float _pickupRadius = 0.5f;
 
     public PlayerPickupState(Player player) {
         _player = player;
@@ -26,7 +26,7 @@ public class PlayerPickupState : IState
     }
 
     public void Update(float deltaTime) {
-        _player.Movement.UpdateInput();
+        _player.Movement.Stop();
 
         _pickupTimeLeft -= deltaTime;
         if (_pickupTimeLeft <= 0) {

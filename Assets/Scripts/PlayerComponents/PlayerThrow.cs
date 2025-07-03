@@ -17,6 +17,7 @@ public class PlayerThrow : MonoBehaviour
         _thrownObject = Instantiate(_heldItem.Prefab, throwSpawnPoint.position, Quaternion.identity);
         Rigidbody2D rb = _thrownObject.GetComponent<Rigidbody2D>();
         rb.linearVelocity = direction * _heldItem.ThrowSpeed;
+        rb.angularVelocity = _heldItem.AngularSpeed;
 
         _heldItem.OnThrow(direction);
         _heldItem = null;

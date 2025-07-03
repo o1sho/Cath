@@ -15,3 +15,4 @@ MonoBehaviour:
   _itemName: Stone
   _prefab: {fileID: 6550334488028484799, guid: 4740aa2ff272fb145a6d39d402678763, type: 3}
   _throwSpeed: 10
+  angularSpeed: 500
