@@ -39,6 +39,11 @@ public class PlayerMovingState : IState
             _player.ChangeState(new PlayerPickupState(_player));
         }
 
+        if (!_player.GroundCheck.IsGround) {
+            _player.ChangeState(new PlayerFallState(_player));
+            return;
+        }
+
         _player.Movement.Move(deltaTime);
 
         _visual.SetLocomotionState(isMoving: true, Mathf.Abs(_player.Movement.InputVector.x), _player.Movement.InputVector.y);

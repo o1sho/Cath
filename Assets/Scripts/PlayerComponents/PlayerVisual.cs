@@ -14,6 +14,7 @@ public class PlayerVisual : MonoBehaviour
     private const string IS_PICKUP = "isPickup";
     private const string VELOCITY_X = "velocityX";
     private const string VELOCITY_Y = "velocityY";
+    private const string IS_FALL = "isFall";
     
 
     private void Awake() {
@@ -41,6 +42,10 @@ public class PlayerVisual : MonoBehaviour
 
     public void SetPickupAnimation(bool isPickup) {
         _animator.SetBool(IS_PICKUP, isPickup);
+    }
+
+    public void TriggerAnimation(string trigger) {
+        _animator.SetTrigger(trigger);
     }
 
     public void SetFacingDirection(Vector2 direction) {

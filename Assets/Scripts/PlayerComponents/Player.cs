@@ -7,6 +7,7 @@ public class Player : StateMachine
     [Header("Player Settings")]
     [SerializeField] private Transform throwSpawnPoint; // Точка спавна предмета
     [SerializeField] private Vector3 currentSpawnPoint;
+    [SerializeField] private PlayerGroundCheck groundCheck;
 
     private Rigidbody2D _rigidbody;
     private PlayerMovement _movement;
@@ -18,6 +19,7 @@ public class Player : StateMachine
     public PlayerMovement Movement => _movement;
     public PlayerDash Dash => _dash;
     public PlayerThrow Throw => _throw;
+    public PlayerGroundCheck GroundCheck => groundCheck;
 
     private void Awake() {
         Instance = this;
@@ -34,6 +36,7 @@ public class Player : StateMachine
         ChangeState(new PlayerIdleState(this));
     }
 
+
     private void FixedUpdate() {
         _rigidbody.linearVelocity = _movement.Velocity; // Применяем скорость от PlayerMovement
     }
@@ -46,4 +49,9 @@ public class Player : StateMachine
         ChangeState(new PlayerIdleState(this));
     }
 
+    //private void OnTriggerStay2D(Collider2D collision) {
+    //    if (collision.CompareTag("FallArea")) {
+    //        ChangeState(new PlayerFallState(this));
+    //    }
+    //}
 }

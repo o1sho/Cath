@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Environment
+  - Throwable
+  - NPC
+  - FallArea
+  - GroundArea
   layers:
   - Default
   - TransparentFX

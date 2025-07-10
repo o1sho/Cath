@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 LastNonZeroInput => _lastNonZeroInput;
 
     private void Awake() {
-        _lastNonZeroInput = Vector2.down; // По умолчанию вниз
+        _lastNonZeroInput = Vector2.down; 
     }
 
     public void UpdateInput() {

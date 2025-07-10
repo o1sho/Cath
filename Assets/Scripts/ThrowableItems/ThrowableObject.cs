@@ -31,9 +31,9 @@ public class ThrowableObject : MonoBehaviour
         //     Destroy(gameObject);
         //     Debug.Log($"{gameObject.name} destroyed because it hit an enemy");
         // }
-        if (other.CompareTag("Environment")) {
+        if (other.CompareTag("Environment") || other.CompareTag("NPC")) {
             OnHit();
-             Debug.Log($"{gameObject.name} destroyed because it hit an Environment");
+            Debug.Log($"{gameObject.name} destroyed because it hit");
         }
     }
 
