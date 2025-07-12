@@ -9,6 +9,7 @@ TagManager:
   - NPC
   - FallArea
   - GroundArea
+  - NPC_enemy
   layers:
   - Default
   - TransparentFX

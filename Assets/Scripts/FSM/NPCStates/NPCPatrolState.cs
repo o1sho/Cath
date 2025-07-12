@@ -16,7 +16,7 @@ public class NPCPatrolState : IState {
     }
 
     public void Update(float deltaTime) {
-
+        _npc.Movement.PatrolMove(deltaTime);
     }
 
 

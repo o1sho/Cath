@@ -9,8 +9,15 @@ public class NPC : StateMachine
         Friendly
     }
 
+    public enum NPCTypeOfMovement {
+        Static,
+        Dynamic
+    }
+
 
     [SerializeField] private NPCType npcType;
+    [SerializeField] private NPCTypeOfMovement npcTypeOfMovement;
+    
 
     private NPCMovement _movement;
     private NPCVisual _visual;
@@ -21,6 +28,7 @@ public class NPC : StateMachine
     public NPCVisual Visual => _visual;
     public NPCAttack Attack => _attack;
     public NPCType NPCtype => npcType;
+    public NPCTypeOfMovement NPCtypeOfMovement => npcTypeOfMovement;
 
     private void Awake() {
         _visual = GetComponent<NPCVisual>();
@@ -29,7 +37,7 @@ public class NPC : StateMachine
 
         switch (npcType) {
             case NPCType.Enemy:
-                ChangeState(new NPCIdleState(this));
+                ChangeState(new NPCPatrolState(this));
                 break;
             case NPCType.Friendly:
                 ChangeState(new NPCIdleState(this));

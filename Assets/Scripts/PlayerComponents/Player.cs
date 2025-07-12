@@ -36,7 +36,6 @@ public class Player : StateMachine
         ChangeState(new PlayerIdleState(this));
     }
 
-
     private void FixedUpdate() {
         _rigidbody.linearVelocity = _movement.Velocity; // Применяем скорость от PlayerMovement
     }
@@ -47,6 +46,12 @@ public class Player : StateMachine
         _dash.ResetCooldown();
         _throw.ClearHeldItem();
         ChangeState(new PlayerIdleState(this));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("NPC_enemy")) {
+            Respawn();
+        }
     }
 
     //private void OnTriggerStay2D(Collider2D collision) {
