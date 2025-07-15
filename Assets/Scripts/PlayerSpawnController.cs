@@ -32,7 +32,7 @@ public class PlayerSpawnController : MonoBehaviour
 
         if (_lastActiveSpawn == this) {
             _respawnTimer -= Time.deltaTime;
-            Debug.Log($"Respawn timer: {_respawnTimer} for spawn at {this.name}");
+            //Debug.Log($"Respawn timer: {_respawnTimer} for spawn at {this.name}");
 
             if (_respawnTimer <= 0) {
                 Player.Instance.Respawn();

@@ -16,7 +16,7 @@ public class ThrowableObject : MonoBehaviour
     private void Update() {
         if (!IsVisibleByCamera()) {
             OnHit();
-            Debug.Log($"{gameObject.name} destroyed because it left the camera bounds");
+            //Debug.Log($"{gameObject.name} destroyed because it left the camera bounds");
         }
     }
 

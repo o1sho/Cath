@@ -20,16 +20,8 @@ public class NPCIdleState : IState
 
     public void Update(float deltaTime) {
         if (_npc.NPCtype == NPC.NPCType.Friendly) {
-            // ѕроверка взаимодействи€ дл€ интерактивных NPC
-            //if (GameInput.Instance != null && GameInput.Instance.InputSystem != null &&
-            //    GameInput.Instance.InputSystem.Player.Interact.WasPressedThisFrame()) {
-            //    Collider2D[] colliders = Physics2D.OverlapCircleAll(_npc.transform.position, 1f);
-            //    foreach (var collider in colliders) {
-            //        if (collider.CompareTag("Player")) {
-            //            _npc.ChangeState(new NPCTalkState(_npc));
-            //            return;
-            //        }
-            //    }
+            //if (_npc.InteractionCheck.IsPlayer) {
+            //    _npc.ChangeState(new NPCInteractionState(_npc));
             //}
         }
     }

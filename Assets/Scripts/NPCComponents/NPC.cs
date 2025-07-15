@@ -9,31 +9,27 @@ public class NPC : StateMachine
         Friendly
     }
 
-    public enum NPCTypeOfMovement {
-        Static,
-        Dynamic
-    }
-
 
     [SerializeField] private NPCType npcType;
-    [SerializeField] private NPCTypeOfMovement npcTypeOfMovement;
-    
 
-    private NPCMovement _movement;
     private NPCVisual _visual;
-    private NPCAttack _attack;
+    private NPCMovementHandler _movementHandler;
+    private NPCPatrolHandler _patrolHandler;
+    private NPCPushReactionHandler _pushReactionHandler;
 
 
-    public NPCMovement Movement => _movement;
+
     public NPCVisual Visual => _visual;
-    public NPCAttack Attack => _attack;
+    public NPCMovementHandler Movement => _movementHandler;
+    public NPCPatrolHandler PatrolHandler => _patrolHandler;
+    public NPCPushReactionHandler PushReactionHandler => _pushReactionHandler;
     public NPCType NPCtype => npcType;
-    public NPCTypeOfMovement NPCtypeOfMovement => npcTypeOfMovement;
 
     private void Awake() {
         _visual = GetComponent<NPCVisual>();
-        _movement = GetComponent<NPCMovement>();
-        _attack = GetComponent<NPCAttack>();
+        _movementHandler ??= GetComponent<NPCMovementHandler>();
+        _patrolHandler ??= GetComponent<NPCPatrolHandler>();
+        _pushReactionHandler ??= GetComponent<NPCPushReactionHandler>();
 
         switch (npcType) {
             case NPCType.Enemy:
@@ -44,4 +40,6 @@ public class NPC : StateMachine
                 break;
         }  
     }
+
+
 }
