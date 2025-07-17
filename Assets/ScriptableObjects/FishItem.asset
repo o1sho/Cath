@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d749bd9e554a8b04dade2c6afbec4525, type: 3}
-  m_Name: StylusItrm
+  m_Name: FishItem
   m_EditorClassIdentifier: 
-  _itemName: Stylus
-  _prefab: {fileID: 6550334488028484799, guid: 303dd06063ee0db42aef41c41c7a720b, type: 3}
-  _throwSpeed: 3
-  angularSpeed: 100
+  _itemName: Fish
+  _prefab: {fileID: 6550334488028484799, guid: 2c3db48e80a407d43b1e731a0166037d, type: 3}
+  _throwSpeed: 7
+  angularSpeed: 360
+  displaySprite: {fileID: -2194294483443767910, guid: 7a6bc63260905cd4fa3490c74617b0ad, type: 3}

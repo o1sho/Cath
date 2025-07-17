@@ -31,16 +31,21 @@ public class ThrowableObject : MonoBehaviour
         //     Destroy(gameObject);
         //     Debug.Log($"{gameObject.name} destroyed because it hit an enemy");
         // }
-        if (other.CompareTag("Environment") || other.CompareTag("NPC")) {
+        if (other.CompareTag("Environment") || other.CompareTag("NPC") || other.CompareTag("NPC_enemy")) {
             OnHit();
             Debug.Log($"{gameObject.name} destroyed because it hit");
         }
     }
 
     private void OnHit() {
-        _animator.SetTrigger("isDestroy");
-        _rigidbody.linearVelocity = new Vector2(0, 0);
-        _rigidbody.angularVelocity = 0;
+        if (_animator.isActiveAndEnabled) {
+            _animator.SetTrigger("isDestroy");
+            _rigidbody.linearVelocity = new Vector2(0, 0);
+            _rigidbody.angularVelocity = 0;
+        }
+        else {
+            Destroy();
+        }
     }
 
     public void Destroy() {

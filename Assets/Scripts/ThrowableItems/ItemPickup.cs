@@ -20,7 +20,7 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    public void Pickup(PlayerThrow playerThrow) {
+    public void Pickup(PlayerThrowHandler playerThrow) {
         if (_throwableItem == null) {
             Debug.LogWarning($"Cannot pick up: No valid IThrowableItem assigned to {gameObject.name}");
             return;

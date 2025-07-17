@@ -16,3 +16,4 @@ MonoBehaviour:
   _prefab: {fileID: 6550334488028484799, guid: 4740aa2ff272fb145a6d39d402678763, type: 3}
   _throwSpeed: 10
   angularSpeed: 500
+  displaySprite: {fileID: -2182124076254010665, guid: c5fbba00b60d5854194022fd30403f81, type: 3}

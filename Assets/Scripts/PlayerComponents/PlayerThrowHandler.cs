@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class PlayerThrow : MonoBehaviour
+public class PlayerThrowHandler : MonoBehaviour
 {
+    [SerializeField] private PlayerHeldItemDisplayHandler displayHandler;
+
     [SerializeField] private Transform throwSpawnPoint;
 
     private IThrowableItem _heldItem;
@@ -9,7 +11,10 @@ public class PlayerThrow : MonoBehaviour
 
     private GameObject _thrownObject;
 
-
+    private void Awake() {
+        displayHandler = GetComponentInChildren<PlayerHeldItemDisplayHandler>();
+        Debug.Log(displayHandler);
+    }
 
     public void ThrowItem(Vector2 direction) {
         if (_heldItem == null) return;
@@ -20,15 +25,17 @@ public class PlayerThrow : MonoBehaviour
         rb.angularVelocity = _heldItem.AngularSpeed;
 
         _heldItem.OnThrow(direction);
-        _heldItem = null;
+        ClearHeldItem();
     }
 
     public void SetHeldItem(IThrowableItem item) {
         _heldItem = item;
+        displayHandler.ShowItem(_heldItem);
     }
 
     public void ClearHeldItem() {
         _heldItem = null;
+        displayHandler.ShowItem(null);
     }
 
 }

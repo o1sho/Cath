@@ -12,13 +12,13 @@ public class Player : StateMachine
     private Rigidbody2D _rigidbody;
     private PlayerMovement _movement;
     private PlayerDash _dash;
-    private PlayerThrow _throw;
+    private PlayerThrowHandler _throw;
 
     [HideInInspector] public Rigidbody2D Rigidbody => _rigidbody;
     public Vector3 CurrentSpawnPoint { get => currentSpawnPoint; set => currentSpawnPoint = value; }
     public PlayerMovement Movement => _movement;
     public PlayerDash Dash => _dash;
-    public PlayerThrow Throw => _throw;
+    public PlayerThrowHandler Throw => _throw;
     public PlayerGroundCheck GroundCheck => groundCheck;
 
     private void Awake() {
@@ -30,7 +30,7 @@ public class Player : StateMachine
 
         _movement = GetComponent<PlayerMovement>();
         _dash = GetComponent<PlayerDash>();
-        _throw = GetComponent<PlayerThrow>();
+        _throw = GetComponent<PlayerThrowHandler>();
 
         // Начальное состояние
         ChangeState(new PlayerIdleState(this));
