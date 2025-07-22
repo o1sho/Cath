@@ -7,6 +7,7 @@ public class NPCPatrolHandler : MonoBehaviour
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] private float minDistance = 0.1f;
     [SerializeField] private float waitMaxTimeAtPoint = 1.5f;
+    [SerializeField] private bool isDisappear = false;
 
     private int _currentPointIndex = 0;
     private bool _isWaiting = false;
@@ -35,18 +36,23 @@ public class NPCPatrolHandler : MonoBehaviour
     private void Update() {
         if (_rigidbody.linearVelocity.y < 0) _spriteRenderer.flipX = true;
         if (_rigidbody.linearVelocity.y > 0) _spriteRenderer.flipX = false;
+        if (_rigidbody.linearVelocity.x < 0) _spriteRenderer.flipY = true;
+        if (_rigidbody.linearVelocity.x > 0) _spriteRenderer.flipY = false;
     }
 
     private IEnumerator WaitAtPoint() {
         _isWaiting = true;
 
         _rigidbody.linearVelocity = Vector2.zero;
-        _spriteRenderer.enabled = false;
+
+        if (isDisappear) _spriteRenderer.enabled = false;
 
         yield return new WaitForSeconds(Random.Range(0, waitMaxTimeAtPoint));
 
         _currentPointIndex = (_currentPointIndex + 1) % patrolPoints.Length;
-        _spriteRenderer.enabled = true;
+
+        if (isDisappear) _spriteRenderer.enabled = true;
+
         _isWaiting = false;
     }
 }

@@ -16,16 +16,6 @@ public class GameManager : StateMachine
         else if (Instance != this) {
             Destroy(gameObject);
         }
-
-        //if (SceneManager.GetActiveScene().name == "Gameplay") {
-        //    ChangeState(new GamePlayingState(this));
-        //}
-        //else {
-        //    ChangeState(new GameMainMenuState(this));
-        //}
-
-
-
     }
 
     private void OnEnable() {

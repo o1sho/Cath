@@ -36,6 +36,11 @@ public class PlayerIdleState : IState {
             return;
         }
 
+        if (!_player.GroundCheck.IsGround && !_player.GroundCheck.IsGroundForRiding) {
+            _player.ChangeState(new PlayerFallState(_player));
+            return;
+        }
+
 
         if (GameInput.Instance.InputSystem.Player.Interact.WasPressedThisFrame()) {
             _player.ChangeState(new PlayerPickupState(_player));

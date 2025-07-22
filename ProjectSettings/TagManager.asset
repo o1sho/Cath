@@ -10,14 +10,15 @@ TagManager:
   - FallArea
   - GroundArea
   - NPC_enemy
+  - GroundForRidingArea
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - NPC_riding
   - 
   - 
   - 

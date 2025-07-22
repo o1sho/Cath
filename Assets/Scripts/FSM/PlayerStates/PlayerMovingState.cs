@@ -39,7 +39,7 @@ public class PlayerMovingState : IState
             _player.ChangeState(new PlayerPickupState(_player));
         }
 
-        if (!_player.GroundCheck.IsGround) {
+        if (!_player.GroundCheck.IsGround && !_player.GroundCheck.IsGroundForRiding) {
             _player.ChangeState(new PlayerFallState(_player));
             return;
         }

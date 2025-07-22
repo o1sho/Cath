@@ -186,6 +186,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   minDistance: 0.1
+  waitMaxTimeAtPoint: 1.5
+  isDisappear: 1
 --- !u!114 &6838703887727398470
 MonoBehaviour:
   m_ObjectHideFlags: 0
