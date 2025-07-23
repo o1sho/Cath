@@ -1,50 +1,43 @@
 using UnityEngine;
 
-public class PlayerMovingState : IState 
+public class PlayerMovingState : PlayerStateBase 
 {
-    private readonly Player _player;
-    private readonly PlayerVisual _visual;
+    public PlayerMovingState(Player player) : base(player) { }
 
-    public PlayerMovingState(Player player) {
-        _player = player;
-        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
-    }
+    public override void Enter() {
 
-    public void Enter() {
         _visual.SetLocomotionState(isMoving: true, Mathf.Abs(_player.Movement.InputVector.x), _player.Movement.InputVector.y);
         _visual.SetFacingDirection(_player.Movement.InputVector);
 
         Debug.Log("Player entered Moving state");
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
         _player.Movement.UpdateInput();
 
         if (_player.Movement.InputVector.magnitude == 0) {
-            _player.ChangeState(new PlayerIdleState(_player));
+            _player.ChangeState(_player.IdleState);
             return;
         }
 
         if (_player.Dash.CanDash && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame() && _player.Movement.InputVector.magnitude > 0) {
-            _player.ChangeState(new PlayerDashingState(_player));
+            _player.ChangeState(_player.DashingState);
             return;
         }
 
         if (_player.Throw.HeldItem != null && GameInput.Instance.InputSystem.Player.Throw.WasPressedThisFrame()) {
-            _player.ChangeState(new PlayerThrowingState(_player));
+            _player.ChangeState(_player.ThrowingState);
             return;
         }
 
         if (GameInput.Instance.InputSystem.Player.Interact.WasPressedThisFrame()) {
-            _player.ChangeState(new PlayerPickupState(_player));
+            _player.ChangeState(_player.PickupState);
         }
 
         if (!_player.GroundCheck.IsGround && !_player.GroundCheck.IsGroundForRiding) {
-            _player.ChangeState(new PlayerFallState(_player));
+            _player.ChangeState(_player.FallState);
             return;
         }
-
-        _player.Movement.Move(deltaTime);
 
         _visual.SetLocomotionState(isMoving: true, Mathf.Abs(_player.Movement.InputVector.x), _player.Movement.InputVector.y);
         _visual.SetFacingDirection(_player.Movement.InputVector);
@@ -52,7 +45,8 @@ public class PlayerMovingState : IState
         _player.Dash.UpdateCooldown(deltaTime);
     }
 
-    public void Exit() {
+    public override void Exit() {
+        _player.Movement.ResetToInputControl();
     }
 
 

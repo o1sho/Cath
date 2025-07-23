@@ -1,24 +1,16 @@
 using UnityEngine;
 
-public class NPCIdleState : IState
+public class NPCIdleState : NPCStateBase
 {
-    private readonly NPC _npc;
-    private readonly NPCVisual _visual;
+    public NPCIdleState(NPC npc) : base(npc) { }
 
-    public NPCIdleState(NPC npc) {
-        _npc = npc;
-        _visual = _npc.Visual;
+
+    public override void Enter() {
+        _visual?.SetLocomotionState(false, 0, 0);
+        Debug.Log($"{_npc.name} entered Idle state");
     }
 
-    public void Enter() {
-        //_npc.Movement.Stop();
-        if (_visual != null) {
-            _visual.SetLocomotionState(isMoving: false, 0, 0);
-        }
-        Debug.Log($"{_npc.gameObject.name} entered Idle state");
-    }
-
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
         if (_npc.NPCtype == NPC.NPCType.Friendly) {
             //if (_npc.InteractionCheck.IsPlayer) {
             //    _npc.ChangeState(new NPCInteractionState(_npc));
@@ -26,6 +18,6 @@ public class NPCIdleState : IState
         }
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 
 }

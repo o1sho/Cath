@@ -1,20 +1,25 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class PlayerThrowHandler : MonoBehaviour
+public class PlayerThrowHandler : MonoBehaviour, IPlayerComponent
 {
     [SerializeField] private PlayerHeldItemDisplayHandler displayHandler;
 
     [SerializeField] private Transform throwSpawnPoint;
 
     private IThrowableItem _heldItem;
+    private GameObject _thrownObject;
+    private Player _player;
+
     public IThrowableItem HeldItem => _heldItem;
 
-    private GameObject _thrownObject;
-
-    private void Awake() {
-        displayHandler = GetComponentInChildren<PlayerHeldItemDisplayHandler>();
-        Debug.Log(displayHandler);
+    //---------------
+    public void Init(Player player) {
+        _player = player;
+        if (displayHandler == null)
+            displayHandler = GetComponentInChildren<PlayerHeldItemDisplayHandler>();
     }
+    //---------------
 
     public void ThrowItem(Vector2 direction) {
         if (_heldItem == null) return;

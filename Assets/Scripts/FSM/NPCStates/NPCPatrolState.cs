@@ -2,27 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCPatrolState : IState {
-    private readonly NPC _npc;
-    private readonly NPCVisual _visual;
+public class NPCPatrolState : NPCStateBase {
+    public NPCPatrolState(NPC npc) : base(npc) { }
 
-    public NPCPatrolState(NPC npc) {
-        _npc = npc;
-        _visual = _npc.Visual;
-    }
-
-    public void Enter() {
+    public override void Enter() {
 
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
         _npc.PatrolHandler.Patrol(deltaTime);
     }
 
-
-    public void Exit() {
+    public override void Exit() {
 
     }
-
-
 }

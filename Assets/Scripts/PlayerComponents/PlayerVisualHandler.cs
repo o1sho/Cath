@@ -1,23 +1,17 @@
 using UnityEngine;
 
-public class PlayerVisual : MonoBehaviour
+public class PlayerVisualHandler : MonoBehaviour, IPlayerComponent
 {
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
     private const string IS_MOVING = "isMoving";
     private const string IS_DEAD = "isDead";
-    private const string IS_THROWING = "isThrowing";
-    private const string IS_DASH_BACK = "isDashBack";
-    private const string IS_DASH_FRONT = "isDashFront";
-    private const string IS_DASH_SIDE = "isDashSide";
     private const string IS_PICKUP = "isPickup";
     private const string VELOCITY_X = "velocityX";
     private const string VELOCITY_Y = "velocityY";
-    private const string IS_FALL = "isFall";
-    
 
-    private void Awake() {
+    public void Init(Player player) {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -55,5 +49,16 @@ public class PlayerVisual : MonoBehaviour
         else if (direction.x < 0) {
             _spriteRenderer.flipX = false; // Влево
         }
+    }
+
+    public void ResetAllAnimationStates() {
+        _animator.ResetTrigger("isFall");
+        _animator.ResetTrigger("isThrowing");
+        _animator.ResetTrigger("isDashBack");
+        _animator.ResetTrigger("isDashFront");
+        _animator.ResetTrigger("isDashSide");
+        _animator.ResetTrigger("isDead");
+        _animator.SetBool("isPickup", false);
+        _animator.SetBool("isMoving", false);
     }
 }

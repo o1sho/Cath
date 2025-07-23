@@ -13,22 +13,11 @@ public class GameMainMenuState : IState {
         Time.timeScale = 0f;
         Debug.Log("Entered MainMenu state");
 
-        string currentScene = SceneManager.GetActiveScene().name;
-        if (currentScene == "MainMenu") {
-            return;
-        }
-        else {
+        if (SceneManager.GetActiveScene().name != "MainMenu") {
             SceneManager.LoadScene("MainMenu");
         }
-
     }
 
-    public void Exit() {
-        
-    }
-
-    public void Update(float deltaTime) {
-        
-    }
-
+    public void Exit() { }
+    public void Update(float deltaTime) { }
 }

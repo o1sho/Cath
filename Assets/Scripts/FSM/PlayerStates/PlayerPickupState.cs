@@ -1,41 +1,33 @@
 using UnityEngine;
 
-public class PlayerPickupState : IState
-{
-    private readonly Player _player;
-    private readonly PlayerVisual _visual;
+public class PlayerPickupState : PlayerStateBase {
+    public PlayerPickupState(Player player) : base(player) { }
 
     private float _pickupTimeLeft;
 
     private readonly float _pickupRadius = 0.5f;
 
-    public PlayerPickupState(Player player) {
-        _player = player;
-        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
+    public override void Enter() {
+        Debug.Log("Player entered Pickup state");
         _pickupTimeLeft = 1f;
-    }
 
-    public void Enter() {
+        _player.Movement.SetMovementMode(PlayerMovementHandler.MovementMode.Frozen);
         _player.Movement.Stop();
 
         _visual.SetPickupAnimation(true);
 
         TryPickupItem();
-
-        Debug.Log("Player entered Pickup state");
     }
 
-    public void Update(float deltaTime) {
-        _player.Movement.Stop();
-
+    public override void Update(float deltaTime) {
         _pickupTimeLeft -= deltaTime;
         if (_pickupTimeLeft <= 0) {
-            _player.ChangeState(_player.Movement.InputVector.magnitude > 0 ? new PlayerMovingState(_player) : new PlayerIdleState(_player));
+            _player.ChangeState(_player.Movement.InputVector.magnitude > 0 ? _player.MovingState : _player.IdleState);
         }
     }
 
-    public void Exit() {
-        _player.Movement.Stop();
+    public override void Exit() {
+        _player.Movement.ResetToInputControl();
 
         _visual.SetPickupAnimation(false);
     }
@@ -46,7 +38,7 @@ public class PlayerPickupState : IState
             if (collider.TryGetComponent<ItemPickup>(out var itemPickup)) {
                 Debug.Log("Attempting to pick up item");
                 itemPickup.Pickup(_player.Throw);
-                return; // Подбираем только один предмет
+                return;
             }
         }
         Debug.Log("No item found to pick up");

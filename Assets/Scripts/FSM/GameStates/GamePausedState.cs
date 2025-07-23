@@ -10,14 +10,17 @@ public class GamePausedState : IState {
 
     public void Enter() {
         Time.timeScale = 0f;
+        UIManager.Instance.ShowPauseMenu();
         Debug.Log("Entered Paused state");
     }
 
     public void Exit() {
-        
+        UIManager.Instance.HidePauseMenu();
     }
 
     public void Update(float deltaTime) {
-        
+        if (GameInput.Instance.InputSystem.Player.Pause.WasPressedThisFrame()) {
+            _manager.ResumeGame();
+        }
     }
 }

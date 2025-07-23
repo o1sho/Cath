@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
-using static NPC;
 
 public class NPC : StateMachine
 {
@@ -25,20 +23,34 @@ public class NPC : StateMachine
     public NPCPushReactionHandler PushReactionHandler => _pushReactionHandler;
     public NPCType NPCtype => npcType;
 
+    private NPCIdleState _idleState;
+    private NPCPatrolState _patrolState;
+    private NPCInteractionState _interactionState;
+    private NPCDeadState _deadState;
+    private NPCChaseState _chaseState;
+    private NPCAttackState _attackState;
+
+    public IState IdleState => _idleState;
+    public IState PatrolState => _patrolState;
+    public IState InteractionState => _interactionState;
+    public IState DeadState => _deadState;
+    public IState ChaseState => _chaseState;
+    public IState AttackState => _attackState;
+
     private void Awake() {
         _visual = GetComponent<NPCVisual>();
         _movementHandler ??= GetComponent<NPCMovementHandler>();
         _patrolHandler ??= GetComponent<NPCPatrolHandler>();
         _pushReactionHandler ??= GetComponent<NPCPushReactionHandler>();
 
-        switch (npcType) {
-            case NPCType.Enemy:
-                ChangeState(new NPCPatrolState(this));
-                break;
-            case NPCType.Friendly:
-                ChangeState(new NPCIdleState(this));
-                break;
-        }  
+        _idleState = new NPCIdleState(this);
+        _patrolState = new NPCPatrolState(this);
+        _interactionState = new NPCInteractionState(this);
+        _deadState = new NPCDeadState(this);
+        _chaseState = new NPCChaseState(this);
+        _attackState = new NPCAttackState(this);
+
+        ChangeState(npcType == NPCType.Enemy ? _patrolState : _idleState);
     }
 
 

@@ -5,21 +5,59 @@ public class Player : StateMachine
     public static Player Instance { get; private set; }
 
     [Header("Player Settings")]
-    [SerializeField] private Transform throwSpawnPoint; // Точка спавна предмета
+    [SerializeField] private Transform throwSpawnPoint;
     [SerializeField] private Vector3 currentSpawnPoint;
-    [SerializeField] private PlayerGroundCheck groundCheck;
+
+    [Header("Handlers")]
+    [SerializeField] private PlayerMovementHandler _movement;
+    [SerializeField] private PlayerDashHandler _dash;
+    [SerializeField] private PlayerThrowHandler _throw;
+    [SerializeField] private PlayerGroundCheckHandler _groundCheck;
+    [SerializeField] private PlayerVisualHandler _visual;
 
     private Rigidbody2D _rigidbody;
-    private PlayerMovement _movement;
-    private PlayerDash _dash;
-    private PlayerThrowHandler _throw;
 
-    [HideInInspector] public Rigidbody2D Rigidbody => _rigidbody;
+    // Public access for handlers
     public Vector3 CurrentSpawnPoint { get => currentSpawnPoint; set => currentSpawnPoint = value; }
-    public PlayerMovement Movement => _movement;
-    public PlayerDash Dash => _dash;
+    public PlayerMovementHandler Movement => _movement;
+    public PlayerDashHandler Dash => _dash;
     public PlayerThrowHandler Throw => _throw;
-    public PlayerGroundCheck GroundCheck => groundCheck;
+    public PlayerGroundCheckHandler GroundCheck => _groundCheck;
+    public PlayerVisualHandler VisualHandler => _visual;
+    public Rigidbody2D Rigidbody => _rigidbody;
+
+    // States
+    private PlayerIdleState _idleState;
+    private PlayerMovingState _movingState;
+    private PlayerDashingState _dashingState;
+    private PlayerFallState _fallState;
+    private PlayerThrowingState _throwingState;
+    private PlayerPickupState _pickupState;
+    public IState IdleState => _idleState;
+    public IState MovingState => _movingState;
+    public IState DashingState => _dashingState;
+    public IState FallState => _fallState;
+    public IState ThrowingState => _throwingState;
+    public IState PickupState => _pickupState;
+
+    //----------------------------------------------------
+    private void InitHandlers() {
+        _visual?.Init(this);
+        _movement?.Init(this);
+        _dash?.Init(this);
+        _throw?.Init(this);
+        _groundCheck?.Init(this);
+    }
+
+    private void InitStates() {
+        _idleState = new PlayerIdleState(this);
+        _movingState = new PlayerMovingState(this);
+        _dashingState = new PlayerDashingState(this);
+        _fallState = new PlayerFallState(this);
+        _throwingState = new PlayerThrowingState(this);
+        _pickupState = new PlayerPickupState(this);
+    }
+    //----------------------------------------------------
 
     private void Awake() {
         Instance = this;
@@ -28,35 +66,27 @@ public class Player : StateMachine
         _rigidbody.freezeRotation = true;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
-        _movement = GetComponent<PlayerMovement>();
-        _dash = GetComponent<PlayerDash>();
-        _throw = GetComponent<PlayerThrowHandler>();
+        InitHandlers();  // Сборка модулей
+        InitStates();    // Сборка состояний
 
-        // Начальное состояние
-        ChangeState(new PlayerIdleState(this));
+        ChangeState(_idleState);
+    }
+
+    private void Start() {
+        _movement?.ResetVelocity();
     }
 
     private void FixedUpdate() {
-        _rigidbody.linearVelocity = _movement.Velocity; // Применяем скорость от PlayerMovement
+        _rigidbody.linearVelocity = _movement.Velocity;
     }
 
     public void Respawn() {
         transform.position = currentSpawnPoint;
-        _movement.ResetVelocity();
-        _dash.ResetCooldown();
-        _throw.ClearHeldItem();
-        ChangeState(new PlayerIdleState(this));
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("NPC_enemy")) {
-            Respawn();
-        }
+        _visual?.ResetAllAnimationStates();
+        _movement?.ResetVelocity();
+        _dash?.ResetCooldown();
+        _throw?.ClearHeldItem();
+        ChangeState(_idleState);
     }
-
-    //private void OnTriggerStay2D(Collider2D collision) {
-    //    if (collision.CompareTag("FallArea")) {
-    //        ChangeState(new PlayerFallState(this));
-    //    }
-    //}
 }

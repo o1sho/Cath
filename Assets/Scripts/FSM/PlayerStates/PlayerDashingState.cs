@@ -1,19 +1,15 @@
 using UnityEngine;
 
-public class PlayerDashingState : IState {
-    private readonly Player _player;
-    private readonly PlayerVisual _visual;
+public class PlayerDashingState : PlayerStateBase {
+    public PlayerDashingState(Player player) : base(player) { }
 
     private float _dashTimeLeft;
 
-    public PlayerDashingState(Player player) {
-        _player = player;
-        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
-    }
-
-    public void Enter() {
+    public override void Enter() {
         _dashTimeLeft = _player.Dash.DashDuration;
-        _player.Dash.StartDash(_player.Movement.InputVector, _player.Movement);
+        _player.Dash.TriggerCooldown();
+        _player.Movement.SetOverrideVelocity(_player.Movement.InputVector * _player.Dash.GetDashSpeed());
+        _player.Movement.SetMovementMode(PlayerMovementHandler.MovementMode.Override);
 
         string dashTrigger = _player.Movement.InputVector.y > 0.5f ? "isDashBack" :
                             _player.Movement.InputVector.y < -0.5f ? "isDashFront" : "isDashSide";
@@ -24,15 +20,16 @@ public class PlayerDashingState : IState {
         Debug.Log("Player entered Dashing state");
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
         _player.Movement.UpdateInput();
+
         _dashTimeLeft -= deltaTime;
         if (_dashTimeLeft <= 0) {
-            _player.ChangeState(_player.Movement.InputVector.magnitude > 0 ? new PlayerMovingState(_player) : new PlayerIdleState(_player));
+            _player.ChangeState(_player.Movement.InputVector.magnitude > 0 ? _player.MovingState : _player.IdleState);
         }
     }
 
-    public void Exit() {
-        _player.Movement.Stop();
+    public override void Exit() {
+        _player.Movement.ResetToInputControl();
     }
 }

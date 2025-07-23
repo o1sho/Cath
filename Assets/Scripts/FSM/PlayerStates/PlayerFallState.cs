@@ -1,32 +1,27 @@
 using UnityEngine;
 
-public class PlayerFallState : IState
-{
-    private readonly Player _player;
-    private readonly PlayerVisual _visual;
+public class PlayerFallState : PlayerStateBase {
+    public PlayerFallState(Player player) : base(player) { }
 
     private float _fallTimer = 0.8f;
 
-    public PlayerFallState(Player player) {
-        _player = player;
-        _visual = Player.Instance.GetComponentInChildren<PlayerVisual>();
-    }
+    public override void Enter() {
+        Debug.Log("Player entered Fall state");
 
-    public void Enter() {
+        _player.Movement.SetMovementMode(PlayerMovementHandler.MovementMode.Frozen);
         _player.Movement.Stop();
         _visual.TriggerAnimation("isFall");
-
-        Debug.Log("Player entered Fall state");
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
         _fallTimer -= deltaTime;
         if (_fallTimer < 0) {
             _player.Respawn();
-            _player.ChangeState(new PlayerIdleState(_player));
+            _player.ChangeState(_player.IdleState);
         }
     }
 
-    public void Exit() {
+    public override void Exit() {
+        _player.Movement.ResetToInputControl();
     }
 }

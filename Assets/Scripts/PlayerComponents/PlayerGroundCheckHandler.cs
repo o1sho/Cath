@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerGroundCheck : MonoBehaviour
-{
-    public static PlayerGroundCheck Instance { get; private set; }
+public class PlayerGroundCheckHandler : MonoBehaviour, IPlayerComponent {
 
     [SerializeField] private string groundTag;
     [SerializeField] private string groundForRidingTag;
@@ -12,13 +10,16 @@ public class PlayerGroundCheck : MonoBehaviour
     private bool _isGroundForRiding = false;
     private Transform _currentRideTarget;
 
+    private Player _player;
+
     public bool IsGround => _isGround;
     public bool IsGroundForRiding => _isGroundForRiding;
     public Transform CurrentRideTarget => _currentRideTarget;
 
-    private void Awake() {
-        Instance = this;
+    public void Init(Player player) {
+        _player = player;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag(groundTag))
@@ -27,7 +28,7 @@ public class PlayerGroundCheck : MonoBehaviour
         if (collision.CompareTag(groundForRidingTag)) {
             _isGroundForRiding = true;
             _currentRideTarget = collision.transform;
-            Player.Instance.Movement.AttachToPlatform(_currentRideTarget);
+            _player.Movement.AttachToPlatform(_currentRideTarget);
         }
     }
 
@@ -38,7 +39,7 @@ public class PlayerGroundCheck : MonoBehaviour
         if (collision.CompareTag(groundForRidingTag)) {
             _isGroundForRiding = false;
             _currentRideTarget = null;
-            Player.Instance.Movement.DetachFromPlatform();
+            _player.Movement.DetachFromPlatform();
         }
     }
 
