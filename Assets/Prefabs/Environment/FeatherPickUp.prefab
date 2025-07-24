@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6748880902915945761}
   - component: {fileID: 770634624712759055}
   m_Layer: 0
-  m_Name: StylusPickUp
+  m_Name: FeatherPickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -17,13 +17,14 @@ public class Player : StateMachine
 
     private Rigidbody2D _rigidbody;
 
-    // Public access for handlers
     public Vector3 CurrentSpawnPoint { get => currentSpawnPoint; set => currentSpawnPoint = value; }
+
+    // Public access for handlers
     public PlayerMovementHandler Movement => _movement;
     public PlayerDashHandler Dash => _dash;
     public PlayerThrowHandler Throw => _throw;
     public PlayerGroundCheckHandler GroundCheck => _groundCheck;
-    public PlayerVisualHandler VisualHandler => _visual;
+    public PlayerVisualHandler Visual => _visual;
     public Rigidbody2D Rigidbody => _rigidbody;
 
     // States

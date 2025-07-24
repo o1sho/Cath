@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class NPCPatrolHandler : MonoBehaviour
+public class NPCPatrolHandler : MonoBehaviour, INPCComponent
 {
+    private NPC _npc;
+
     [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] private float minDistance = 0.1f;
@@ -15,10 +17,13 @@ public class NPCPatrolHandler : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
 
-    private void Awake() {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+    //---------------
+    public void Init(NPC npc) {
+        _npc = npc;
+        if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
+        if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    //---------------
 
     public void Patrol(float deltaTime) {
         if (_isWaiting || patrolPoints.Length == 0) return;

@@ -169,6 +169,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcType: 0
+  _visual: {fileID: 0}
+  _movement: {fileID: 0}
+  _patrol: {fileID: 5848937138367569711}
+  _pushReaction: {fileID: 0}
+  _throwableReaction: {fileID: 0}
 --- !u!114 &5848937138367569711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de114c4159964234087f19f215d71a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 2
+  patrolSpeed: 6
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}

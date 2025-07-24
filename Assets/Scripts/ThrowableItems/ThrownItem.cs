@@ -1,11 +1,16 @@
 using UnityEngine;
 
-public class ThrowableObject : MonoBehaviour
+public class ThrownItem : MonoBehaviour
 {
     private Camera _mainCamera;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
 
+    private IThrowableItem _sourceItem;
+
+    public void Init(IThrowableItem sourceItem) {
+        _sourceItem = sourceItem;
+    }
 
     private void Awake() {
         _mainCamera = Camera.main;
@@ -16,7 +21,6 @@ public class ThrowableObject : MonoBehaviour
     private void Update() {
         if (!IsVisibleByCamera()) {
             OnHit();
-            //Debug.Log($"{gameObject.name} destroyed because it left the camera bounds");
         }
     }
 
@@ -26,21 +30,16 @@ public class ThrowableObject : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        // if (other.CompareTag("Enemy"))
-        // {
-        //     Destroy(gameObject);
-        //     Debug.Log($"{gameObject.name} destroyed because it hit an enemy");
-        // }
-        if (other.CompareTag("Environment") || other.CompareTag("NPC") || other.CompareTag("NPC_enemy")) {
+        if (other.TryGetComponent<IThrowableTarget>(out var target)) {
+            target.OnHitByItem(_sourceItem);
             OnHit();
-            Debug.Log($"{gameObject.name} destroyed because it hit");
         }
     }
 
     private void OnHit() {
         if (_animator.isActiveAndEnabled) {
             _animator.SetTrigger("isDestroy");
-            _rigidbody.linearVelocity = new Vector2(0, 0);
+            _rigidbody.linearVelocity = Vector2.zero;
             _rigidbody.angularVelocity = 0;
         }
         else {
@@ -48,7 +47,5 @@ public class ThrowableObject : MonoBehaviour
         }
     }
 
-    public void Destroy() {
-        Destroy(gameObject);
-    }
+    public void Destroy() => Destroy(gameObject);
 }

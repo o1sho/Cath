@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class NPCVisual : MonoBehaviour
+public class NPCVisualHandler : MonoBehaviour, INPCComponent
 {
+    private NPC _npc;
     private Animator _animator;
 
-    private void Awake() {
-        _animator = GetComponent<Animator>();
+    //---------------
+    public void Init(NPC npc) {
+        _npc = npc;
+        if (_animator == null) _animator = GetComponent<Animator>();
     }
+    //---------------
 
     public void SetLocomotionState(bool isMoving, float blendX, float blendY) {
         _animator.SetBool("isMoving", isMoving);

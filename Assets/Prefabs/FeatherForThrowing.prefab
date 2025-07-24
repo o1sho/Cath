@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2362145528939830997}
   - component: {fileID: 8928770592707824325}
   m_Layer: 0
-  m_Name: StylusForThrowing
+  m_Name: FeatherForThrowing
   m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

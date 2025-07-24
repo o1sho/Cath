@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class NPCMovementHandler : MonoBehaviour
+public class NPCMovementHandler : MonoBehaviour, INPCComponent
 {
+    private NPC _npc;
+
     [SerializeField] private float moveSpeed = 2f;
     private Rigidbody2D _rigidbody;
     private Vector2 _inputVector;
@@ -14,13 +16,14 @@ public class NPCMovementHandler : MonoBehaviour
     public Vector2 LastNonZeroInput => _lastNonZeroInput;
     public Vector2 Velocity => _velocity;
 
-    
-
-    private void Awake() {
-        _rigidbody = GetComponent<Rigidbody2D>();
+    //---------------
+    public void Init(NPC npc) {
+        _npc = npc;
+        if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.gravityScale = 0f;
         _rigidbody.freezeRotation = true;
     }
+    //---------------
 
     public void UpdateInput(Vector2 input) {
         _inputVector = input;
@@ -33,8 +36,6 @@ public class NPCMovementHandler : MonoBehaviour
     public void Move(float deltaTime) {
         _velocity = _inputVector.normalized * moveSpeed * deltaTime;
     }
-
-
 
     public void Stop() {
         _velocity = Vector2.zero;

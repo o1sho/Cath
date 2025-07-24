@@ -1,21 +1,15 @@
 using UnityEngine;
 
-public class NPCInteractionState : IState {
-    private readonly NPC _npc;
-    private readonly NPCVisual _visual;
+public class NPCInteractionState : NPCStateBase {
+    public NPCInteractionState(NPC npc) : base(npc) { }
 
-    public NPCInteractionState(NPC npc) {
-        _npc = npc;
-        _visual = _npc.Visual;
-    }
-
-    public void Enter() {
+    public override void Enter() {
         Debug.Log("123123");
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
 
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 }

@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class NPCPushReactionHandler : MonoBehaviour
+public class NPCPushReactionHandler : MonoBehaviour, INPCComponent
 {
+    private NPC _npc;
+
     public enum PushAxes {
         X,
         Y,
@@ -19,9 +21,12 @@ public class NPCPushReactionHandler : MonoBehaviour
 
     public NPCWeight Weight => weight;
 
-    private void Awake() {
-        _rigidbody = GetComponent<Rigidbody2D>();
+    //---------------
+    public void Init(NPC npc) {
+        _npc = npc;
+        if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
     }
+    //---------------
 
     private void Start() {
         _rigidbody.gravityScale = 0f;
@@ -64,4 +69,6 @@ public class NPCPushReactionHandler : MonoBehaviour
         }
     }
 
+    public void SetHeavyWeight() => weight = NPCWeight.Heavy;
+    public void SetLightWeight() => weight = NPCWeight.Light;
 }

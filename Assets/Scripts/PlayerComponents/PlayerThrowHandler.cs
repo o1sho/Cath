@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerThrowHandler : MonoBehaviour, IPlayerComponent
 {
@@ -25,9 +24,15 @@ public class PlayerThrowHandler : MonoBehaviour, IPlayerComponent
         if (_heldItem == null) return;
 
         _thrownObject = Instantiate(_heldItem.Prefab, throwSpawnPoint.position, Quaternion.identity);
-        Rigidbody2D rb = _thrownObject.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = direction * _heldItem.ThrowSpeed;
-        rb.angularVelocity = _heldItem.AngularSpeed;
+
+        if (_thrownObject.TryGetComponent<Rigidbody2D>(out var rb)) {
+            rb.linearVelocity = direction * _heldItem.ThrowSpeed;
+            rb.angularVelocity = _heldItem.AngularSpeed;
+        }
+
+        if (_thrownObject.TryGetComponent<ThrownItem>(out var thrownItem)) {
+            thrownItem.Init(_heldItem);
+        }
 
         _heldItem.OnThrow(direction);
         ClearHeldItem();
@@ -42,5 +47,4 @@ public class PlayerThrowHandler : MonoBehaviour, IPlayerComponent
         _heldItem = null;
         displayHandler.ShowItem(null);
     }
-
 }

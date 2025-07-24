@@ -1,18 +1,12 @@
 using UnityEngine;
 
-public class NPCDeadState : IState {
-    private readonly NPC _npc;
-    private readonly NPCVisual _visual;
+public class NPCDeadState : NPCStateBase {
+    public NPCDeadState(NPC npc) : base(npc) { }
 
-    public NPCDeadState(NPC npc) {
-        _npc = npc;
-        _visual = _npc.Visual;
-    }
-
-    public void Enter() {
+    public override void Enter() {
 
     }
 
-    public void Update(float deltaTime) { }
-    public void Exit() { }
+    public override void Update(float deltaTime) { }
+    public override void Exit() { }
 }

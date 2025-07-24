@@ -1,23 +1,18 @@
 using UnityEngine;
 
-public class NPCChaseState : IState {
-    private readonly NPC _npc;
-    private readonly NPCVisual _visual;
+public class NPCChaseState : NPCStateBase
+{
+    public NPCChaseState(NPC npc) : base(npc) { }
 
-    public NPCChaseState(NPC npc) {
-        _npc = npc;
-        _visual = _npc.Visual;
-    }
-
-    public void Enter() {
+    public override void Enter() {
 
     }
 
-    public void Update(float deltaTime) {
+    public override void Update(float deltaTime) {
 
     }
 
-    public void Exit() {
+    public override void Exit() {
 
     }
 }

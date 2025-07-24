@@ -27,8 +27,10 @@ public class ItemPickup : MonoBehaviour
         }
 
         if (playerThrow.HeldItem == null) {
+            _throwableItem.OnPickup(Player.Instance);
             playerThrow.SetHeldItem(_throwableItem);
-            Destroy(gameObject); // Уничтожаем объект на земле
+
+            Destroy(gameObject);
             Debug.Log($"Picked up {_throwableItem.Name}");
         }
         else {

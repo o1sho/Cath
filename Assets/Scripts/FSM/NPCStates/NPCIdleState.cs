@@ -11,11 +11,7 @@ public class NPCIdleState : NPCStateBase
     }
 
     public override void Update(float deltaTime) {
-        if (_npc.NPCtype == NPC.NPCType.Friendly) {
-            //if (_npc.InteractionCheck.IsPlayer) {
-            //    _npc.ChangeState(new NPCInteractionState(_npc));
-            //}
-        }
+
     }
 
     public override void Exit() { }

@@ -17,3 +17,8 @@ MonoBehaviour:
   _throwSpeed: 10
   angularSpeed: 500
   displaySprite: {fileID: -2182124076254010665, guid: c5fbba00b60d5854194022fd30403f81, type: 3}
+  reactions:
+  - npcType: 1
+    reaction: 0
+  - npcType: 0
+    reaction: 4
