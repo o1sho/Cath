@@ -10,6 +10,7 @@ public class NPC : StateMachine
     [SerializeField] private NPCPatrolHandler _patrol;
     [SerializeField] private NPCPushReactionHandler _pushReaction;
     [SerializeField] private NPCThrowableReactionHandler _throwableReaction;
+    [SerializeField] private NPCDropHandler _drop;
 
     // Public access for handlers
     public NPCVisualHandler Visual => _visual;
@@ -17,6 +18,7 @@ public class NPC : StateMachine
     public NPCPatrolHandler Patrol => _patrol;
     public NPCPushReactionHandler PushReaction => _pushReaction;
     public NPCThrowableReactionHandler ThrowableReaction => _throwableReaction;
+    public NPCDropHandler Drop => _drop;
     public NPCType Type => _type;
 
     // States
@@ -40,6 +42,7 @@ public class NPC : StateMachine
         _patrol?.Init(this);
         _pushReaction?.Init(this);
         _throwableReaction?.Init(this);
+        _drop?.Init(this);
     }
 
     private void InitStates() {
@@ -58,5 +61,7 @@ public class NPC : StateMachine
         ChangeState(_type == NPCType.Enemy ? _patrolState : _idleState);
     }
 
-
+    public void DestroySelf() {
+        Destroy(gameObject);
+    }
 }

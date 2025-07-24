@@ -4,11 +4,13 @@ public class NPCVisualHandler : MonoBehaviour, INPCComponent
 {
     private NPC _npc;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
 
     //---------------
     public void Init(NPC npc) {
         _npc = npc;
         if (_animator == null) _animator = GetComponent<Animator>();
+        if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     //---------------
 
@@ -19,8 +21,14 @@ public class NPCVisualHandler : MonoBehaviour, INPCComponent
     }
 
     public void SetFacingDirection(Vector2 direction) {
-        _animator.SetFloat("FacingX", direction.x);
-        _animator.SetFloat("FacingY", direction.y);
+        //_animator.SetFloat("FacingX", direction.x);
+        //_animator.SetFloat("FacingY", direction.y);
+
+        if (direction.y > 0.1f) _spriteRenderer.flipX = false;
+        else if (direction.y < -0.1f) _spriteRenderer.flipX = true;
+
+        if (direction.x > 0.1f) _spriteRenderer.flipY = true;
+        else if (direction.x < -0.1f) _spriteRenderer.flipY = false;
     }
 
     public void TriggerAttackAnimation() {

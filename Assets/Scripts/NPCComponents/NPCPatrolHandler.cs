@@ -5,59 +5,62 @@ public class NPCPatrolHandler : MonoBehaviour, INPCComponent
 {
     private NPC _npc;
 
-    [SerializeField] private float patrolSpeed = 2f;
-    [SerializeField] Transform[] patrolPoints;
-    [SerializeField] private float minDistance = 0.1f;
-    [SerializeField] private float waitMaxTimeAtPoint = 1.5f;
-    [SerializeField] private bool isDisappear = false;
+    [Header("Movement Settings")]
+    [SerializeField] private float patrolSpeed = 5f;
+
+    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private float waitTimeAtPoint = 1f;
+    [SerializeField] private float reachThreshold = 0.1f;
 
     private int _currentPointIndex = 0;
-    private bool _isWaiting = false;
-
-    private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
+    private float _waitTimer = 0f;
+    private bool _waiting = false;
 
     //---------------
     public void Init(NPC npc) {
         _npc = npc;
-        if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
-        if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     //---------------
 
-    public void Patrol(float deltaTime) {
-        if (_isWaiting || patrolPoints.Length == 0) return;
+    public void ResetPatrol() {
+        _currentPointIndex = 0;
+        _waitTimer = 0f;
+        _waiting = false;
+    }
 
-        Vector2 targetPosition = patrolPoints[_currentPointIndex].position;
-        Vector2 moveDirection = (targetPosition - _rigidbody.position).normalized;
+    public void UpdatePatrol(float deltaTime) {
+        if (patrolPoints == null || patrolPoints.Length == 0)
+            return;
 
-        _rigidbody.linearVelocity = moveDirection * patrolSpeed;
+        Vector2 npcPosition = _npc.transform.position;
+        Vector2 targetPoint = patrolPoints[_currentPointIndex].position;
+        Vector2 toTarget = targetPoint - npcPosition;
 
-        if (Vector2.Distance(_rigidbody.position, targetPosition) < minDistance) {
-            StartCoroutine(WaitAtPoint());
+        if (_waiting) {
+            _npc.Movement.SetOverrideVelocity(Vector2.zero);
+            _waitTimer -= deltaTime;
+
+            if (_waitTimer <= 0f) {
+                _waiting = false;
+                AdvancePoint();
+            }
+
+            return;
+        }
+
+        if (toTarget.magnitude <= reachThreshold) {
+            _waiting = true;
+            _waitTimer = waitTimeAtPoint;
+            _npc.Movement.SetOverrideVelocity(Vector2.zero);
+        }
+        else {
+            Vector2 moveDir = toTarget.normalized;
+            _npc.Movement.SetOverrideVelocity(moveDir * patrolSpeed);
+            _npc.Visual?.SetFacingDirection(moveDir);
         }
     }
 
-    private void Update() {
-        if (_rigidbody.linearVelocity.y < 0) _spriteRenderer.flipX = true;
-        if (_rigidbody.linearVelocity.y > 0) _spriteRenderer.flipX = false;
-        if (_rigidbody.linearVelocity.x < 0) _spriteRenderer.flipY = true;
-        if (_rigidbody.linearVelocity.x > 0) _spriteRenderer.flipY = false;
-    }
-
-    private IEnumerator WaitAtPoint() {
-        _isWaiting = true;
-
-        _rigidbody.linearVelocity = Vector2.zero;
-
-        if (isDisappear) _spriteRenderer.enabled = false;
-
-        yield return new WaitForSeconds(Random.Range(0, waitMaxTimeAtPoint));
-
+    private void AdvancePoint() {
         _currentPointIndex = (_currentPointIndex + 1) % patrolPoints.Length;
-
-        if (isDisappear) _spriteRenderer.enabled = true;
-
-        _isWaiting = false;
     }
 }

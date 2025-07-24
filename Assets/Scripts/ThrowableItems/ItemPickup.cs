@@ -37,4 +37,11 @@ public class ItemPickup : MonoBehaviour
             Debug.Log($"Cannot pick up {_throwableItem.Name}: Player already holds an item");
         }
     }
+
+    public void SetItem(IThrowableItem item) {
+        if (item is ScriptableObject so)
+            this.item = so;
+
+        _throwableItem = item;
+    }
 }

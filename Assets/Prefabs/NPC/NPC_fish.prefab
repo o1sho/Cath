@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 4733027606489693446}
   - component: {fileID: 6281629536258346814}
   - component: {fileID: 6744433672459966042}
+  - component: {fileID: 3264779169081117002}
+  - component: {fileID: 4045300622513492314}
   - component: {fileID: 5848937138367569711}
-  - component: {fileID: 6838703887727398470}
+  - component: {fileID: 7225323025802038922}
+  - component: {fileID: 6841249585226376461}
   m_Layer: 0
   m_Name: NPC_fish
   m_TagString: NPC_enemy
@@ -168,12 +171,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414e1752487cfef48bc1a84695cf8fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcType: 0
-  _visual: {fileID: 0}
-  _movement: {fileID: 0}
+  _type: 0
+  _visual: {fileID: 3264779169081117002}
+  _movement: {fileID: 4045300622513492314}
   _patrol: {fileID: 5848937138367569711}
   _pushReaction: {fileID: 0}
-  _throwableReaction: {fileID: 0}
+  _throwableReaction: {fileID: 7225323025802038922}
+  _drop: {fileID: 6841249585226376461}
+--- !u!114 &3264779169081117002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899473522884983556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e4062c753052f4889ecebfc70c86a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4045300622513492314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899473522884983556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b7da94c313e554383418cd11b8a0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!114 &5848937138367569711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,14 +215,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de114c4159964234087f19f215d71a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 6
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  minDistance: 0.1
-  waitMaxTimeAtPoint: 1.5
-  isDisappear: 1
---- !u!114 &6838703887727398470
+  waitTimeAtPoint: 1
+  reachThreshold: 0.1
+--- !u!114 &7225323025802038922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,9 +229,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8899473522884983556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d36646e1b724c749a04528b8a880c86, type: 3}
+  m_Script: {fileID: 11500000, guid: 6650553c7b453c24fbeb52912b99e2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDestroyed: 1
-  isHasADrop: 1
+--- !u!114 &6841249585226376461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899473522884983556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c568f25044828449dfdac620780dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItems:
+  - {fileID: 11400000, guid: 6d8e637f19b432844b2e52dd01c2880e, type: 2}
   dropPrefab: {fileID: 6550334488028484799, guid: dca5a495431eb494b93504fdac631584, type: 3}

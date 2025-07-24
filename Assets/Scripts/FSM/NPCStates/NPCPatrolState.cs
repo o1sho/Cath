@@ -10,7 +10,7 @@ public class NPCPatrolState : NPCStateBase {
     }
 
     public override void Update(float deltaTime) {
-        _npc.Patrol.Patrol(deltaTime);
+        _npc.Patrol.UpdatePatrol(deltaTime);
     }
 
     public override void Exit() {

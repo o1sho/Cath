@@ -6,7 +6,7 @@ public class NPCIdleState : NPCStateBase
 
 
     public override void Enter() {
-        _visual?.SetLocomotionState(false, 0, 0);
+        //_visual?.SetLocomotionState(false, 0, 0);
         Debug.Log($"{_npc.name} entered Idle state");
     }
 

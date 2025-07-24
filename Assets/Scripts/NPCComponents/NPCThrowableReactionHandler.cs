@@ -34,6 +34,11 @@ public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowa
                 Debug.Log($" вест активирован через {item.Name}");
                 break;
 
+            case ItemReactionType.StartMoving:
+                _npc.ChangeState(_npc.PatrolState);
+                Debug.Log($"{_npc.name} проснулс€ и начал движение от попадани€ {item.Name}");
+                break;
+
             case ItemReactionType.None:
             default:
                 Debug.Log($"{_npc.name} не отреагировал на {item.Name}");

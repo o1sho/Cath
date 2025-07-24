@@ -4,5 +4,6 @@ public enum ItemReactionType {
     MakeLight,
     OpenDialogue,
     GiveItem,
+    StartMoving,
     QuestTrigger
 }
