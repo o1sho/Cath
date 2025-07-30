@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: WaterTile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 3070407914774081190, guid: be4bb17b16ce0ff429ca30f0a6b58e6d, type: 3}
+  - {fileID: 2491116234858521880, guid: 0664823ac9165cf46835a7031fd0f780, type: 3}
+  - {fileID: -3546194178295754358, guid: a172e67007f68ac4eb50194eb43842e5, type: 3}
+  - {fileID: -8904978946037852322, guid: df0a6604228a2ac4c8318dec325a8ca8, type: 3}
+  - {fileID: -1642891960396598816, guid: 222465c72c5dd474e973a416c5b0ab55, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
