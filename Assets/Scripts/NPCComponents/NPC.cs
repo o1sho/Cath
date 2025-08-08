@@ -11,6 +11,7 @@ public class NPC : StateMachine
     [SerializeField] private NPCPushReactionHandler _pushReaction;
     [SerializeField] private NPCThrowableReactionHandler _throwableReaction;
     [SerializeField] private NPCDropHandler _drop;
+    [SerializeField] private NPCQuestSoupHandler _questSoup;
 
     // Public access for handlers
     public NPCVisualHandler Visual => _visual;
@@ -19,6 +20,7 @@ public class NPC : StateMachine
     public NPCPushReactionHandler PushReaction => _pushReaction;
     public NPCThrowableReactionHandler ThrowableReaction => _throwableReaction;
     public NPCDropHandler Drop => _drop;
+    public NPCQuestSoupHandler QuestSoup => _questSoup;
     public NPCType Type => _type;
 
     // States
@@ -43,6 +45,7 @@ public class NPC : StateMachine
         _pushReaction?.Init(this);
         _throwableReaction?.Init(this);
         _drop?.Init(this);
+        _questSoup?.Init(this);
     }
 
     private void InitStates() {

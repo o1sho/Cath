@@ -5,6 +5,7 @@ public class GameManager : StateMachine
 {
     public static GameManager Instance { get; private set; }
 
+    private GameOnboardingState _onboardingState;
     private GamePlayingState _playingState;
     private GamePausedState _pausedState;
     private GameMainMenuState _mainMenuState;
@@ -14,6 +15,7 @@ public class GameManager : StateMachine
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            _onboardingState = new GameOnboardingState(this);
             _playingState = new GamePlayingState(this);
             _pausedState = new GamePausedState(this);
             _mainMenuState = new GameMainMenuState(this);
@@ -26,16 +28,19 @@ public class GameManager : StateMachine
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Gameplay") {
-            ChangeState(_playingState);
-        }
-        else if (scene.name == "MainMenu") {
+        if (scene.name == "0_MainMenu") {
             ChangeState(_mainMenuState);
+        }
+        else if (scene.name == "1_Onboarding") {
+            ChangeState(_onboardingState);
+        }
+        else if (scene.name == "2_MainGameplay") {
+            ChangeState(_playingState);
         }
     }
 
-    public void PlayGame() => ChangeState(_playingState);
+    public void PlayGame() => ChangeState(_onboardingState);
     public void PauseGame() => ChangeState(_pausedState);
-    public void ResumeGame() => ChangeState(_playingState);
+    public void ResumeGame() => ChangeState(_onboardingState);
     public void ToMainMenu() => ChangeState(_mainMenuState);
 }

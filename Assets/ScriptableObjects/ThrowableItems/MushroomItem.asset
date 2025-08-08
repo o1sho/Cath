@@ -19,4 +19,4 @@ MonoBehaviour:
   displaySprite: {fileID: -3712066545962235827, guid: a0318bdee1146c54ba102ba517fb71cf, type: 3}
   reactions:
   - npcType: 3
-    reaction: 0
+    reaction: 6

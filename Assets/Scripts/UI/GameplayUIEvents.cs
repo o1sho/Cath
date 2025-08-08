@@ -5,7 +5,6 @@ public class GameplayUIEvents : MonoBehaviour {
         GameManager.Instance?.PauseGame();
     }
 
-    // Можешь сюда добавить что-то вроде:
     public void OnInventoryPressed() {
         Debug.Log("Inventory not implemented yet.");
     }

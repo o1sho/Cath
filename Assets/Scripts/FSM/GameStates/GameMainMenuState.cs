@@ -13,8 +13,8 @@ public class GameMainMenuState : IState {
         Time.timeScale = 0f;
         Debug.Log("Entered MainMenu state");
 
-        if (SceneManager.GetActiveScene().name != "MainMenu") {
-            SceneManager.LoadScene("MainMenu");
+        if (SceneManager.GetActiveScene().name != "0_MainMenu") {
+            SceneManager.LoadScene("0_MainMenu");
         }
     }
 

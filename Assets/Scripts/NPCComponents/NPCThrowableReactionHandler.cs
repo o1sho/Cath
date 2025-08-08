@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowableTarget
@@ -32,6 +33,9 @@ public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowa
 
             case ItemReactionType.QuestTrigger:
                 Debug.Log($" вест активирован через {item.Name}");
+                if (_npc.name == "SoupContainer") {
+                    _npc.QuestSoup.IngredientHasBeenAdded(item);
+                }
                 break;
 
             case ItemReactionType.StartMoving:

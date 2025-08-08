@@ -15,8 +15,8 @@ public class GamePlayingState : IState
         Debug.Log("Entered Gameplaying state");
         UIManager.Instance.ShowHUD();
 
-        if (SceneManager.GetActiveScene().name != "Gameplay") {
-            SceneManager.LoadScene("Gameplay");
+        if (SceneManager.GetActiveScene().name != "2_MainGameplay") {
+            SceneManager.LoadScene("2_MainGameplay");
         }
     }
 
