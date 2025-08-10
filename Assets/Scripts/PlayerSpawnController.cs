@@ -19,10 +19,19 @@ public class PlayerSpawnController : MonoBehaviour
         if (collision.CompareTag("Player")) {
             Player.Instance.CurrentSpawnPoint = transform.position;
             _confiner.BoundingShape2D = _currentMapBoundary;
-            _lastActiveSpawn = this;
             _respawnTimer = _timeToRespawn;
+
             Debug.Log($"New player spawn position: {Player.Instance.CurrentSpawnPoint}");
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision) {
+        _lastActiveSpawn = null;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        _respawnTimer = _timeToRespawn;
+        _lastActiveSpawn = this;
     }
 
     private void Update() {
