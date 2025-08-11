@@ -40,8 +40,11 @@ public class NPCPatrolHandler : MonoBehaviour, INPCComponent
             _npc.Movement.SetOverrideVelocity(Vector2.zero);
             _waitTimer -= deltaTime;
 
+            _npc.Visual.DisplayHandler(false);
+
             if (_waitTimer <= 0f) {
                 _waiting = false;
+                _npc.Visual.DisplayHandler(true);
                 AdvancePoint();
             }
 

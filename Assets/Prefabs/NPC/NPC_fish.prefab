@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5848937138367569711}
   - component: {fileID: 7225323025802038922}
   - component: {fileID: 6841249585226376461}
+  - component: {fileID: 9066712296192458873}
   m_Layer: 0
   m_Name: NPC_fish
   m_TagString: NPC_enemy
@@ -156,8 +157,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.033005565, y: -0.030134592}
-  m_Size: {x: 0.7962362, y: 0.26816192}
+  m_Offset: {x: 0.03300556, y: 0.16700612}
+  m_Size: {x: 0.7962365, y: 0.31340978}
   m_Direction: 1
 --- !u!114 &6744433672459966042
 MonoBehaviour:
@@ -178,6 +179,8 @@ MonoBehaviour:
   _pushReaction: {fileID: 0}
   _throwableReaction: {fileID: 7225323025802038922}
   _drop: {fileID: 6841249585226376461}
+  _attack: {fileID: 9066712296192458873}
+  _questSoup: {fileID: 0}
 --- !u!114 &3264779169081117002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +251,19 @@ MonoBehaviour:
   dropItems:
   - {fileID: 11400000, guid: 6d8e637f19b432844b2e52dd01c2880e, type: 2}
   dropPrefab: {fileID: 6550334488028484799, guid: dca5a495431eb494b93504fdac631584, type: 3}
+--- !u!114 &9066712296192458873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899473522884983556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ffe60f9187d12439d5702608de5e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: Melee
+  damage: 1
+  knockback: 7
+  hitStun: 1

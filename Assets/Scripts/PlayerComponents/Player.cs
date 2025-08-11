@@ -14,6 +14,7 @@ public class Player : StateMachine
     [SerializeField] private PlayerThrowHandler _throw;
     [SerializeField] private PlayerGroundCheckHandler _groundCheck;
     [SerializeField] private PlayerVisualHandler _visual;
+    [SerializeField] private PlayerHealthHandler _health;
 
     private Rigidbody2D _rigidbody;
 
@@ -25,6 +26,7 @@ public class Player : StateMachine
     public PlayerThrowHandler Throw => _throw;
     public PlayerGroundCheckHandler GroundCheck => _groundCheck;
     public PlayerVisualHandler Visual => _visual;
+    public PlayerHealthHandler Health => _health;
     public Rigidbody2D Rigidbody => _rigidbody;
 
     // States
@@ -34,12 +36,16 @@ public class Player : StateMachine
     private PlayerFallState _fallState;
     private PlayerThrowingState _throwingState;
     private PlayerPickupState _pickupState;
+    private PlayerHurtState _hurtState;
+    private PlayerDeadState _deadState;
     public IState IdleState => _idleState;
     public IState MovingState => _movingState;
     public IState DashingState => _dashingState;
     public IState FallState => _fallState;
     public IState ThrowingState => _throwingState;
     public IState PickupState => _pickupState;
+    public IState HurtState => _hurtState;
+    public IState DeadState => _deadState;
 
     //----------------------------------------------------
     private void InitHandlers() {
@@ -48,6 +54,7 @@ public class Player : StateMachine
         _dash?.Init(this);
         _throw?.Init(this);
         _groundCheck?.Init(this);
+        _health?.Init(this);
     }
 
     private void InitStates() {
@@ -57,6 +64,8 @@ public class Player : StateMachine
         _fallState = new PlayerFallState(this);
         _throwingState = new PlayerThrowingState(this);
         _pickupState = new PlayerPickupState(this);
+        _hurtState = new PlayerHurtState(this);
+        _deadState = new PlayerDeadState(this);
     }
     //----------------------------------------------------
 

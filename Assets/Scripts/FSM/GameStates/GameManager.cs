@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : StateMachine
@@ -9,6 +10,8 @@ public class GameManager : StateMachine
     private GamePlayingState _playingState;
     private GamePausedState _pausedState;
     private GameMainMenuState _mainMenuState;
+
+    private bool _isReloading;
 
     private void Awake() {
         if (Instance == null) {
@@ -27,16 +30,22 @@ public class GameManager : StateMachine
         }
     }
 
+    public void ReloadActiveScene() {
+        if (_isReloading) return;
+        _isReloading = true;
+
+        Time.timeScale = 1f;
+
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "0_MainMenu") {
-            ChangeState(_mainMenuState);
-        }
-        else if (scene.name == "1_Onboarding") {
-            ChangeState(_onboardingState);
-        }
-        else if (scene.name == "2_MainGameplay") {
-            ChangeState(_playingState);
-        }
+        _isReloading = false;
+
+        if (scene.name == "0_MainMenu") ChangeState(_mainMenuState);
+        else if (scene.name == "1_Onboarding") ChangeState(_onboardingState);
+        else if (scene.name == "2_MainGameplay") ChangeState(_playingState);
     }
 
     public void PlayGame() => ChangeState(_onboardingState);

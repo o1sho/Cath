@@ -42,4 +42,8 @@ public class NPCVisualHandler : MonoBehaviour, INPCComponent
     public void SetDeadState(bool isDead) {
         _animator.SetBool("isDead", isDead);
     }
+
+    public void DisplayHandler(bool v) {
+        _spriteRenderer.enabled = v;
+    }
 }
