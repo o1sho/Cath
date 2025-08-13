@@ -126,6 +126,7 @@ MonoBehaviour:
   _groundCheck: {fileID: 1574240851068344407}
   _visual: {fileID: 5314933637381191643}
   _health: {fileID: 3019404546254699326}
+  _heldItemDisplay: {fileID: 0}
 --- !u!114 &2666105418609466330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,8 +466,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -496883125
-  m_SortingLayer: -1
+  m_SortingLayerID: -947753089
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 851585831, guid: 00df3b2cc2688a247b9320f266f6e24e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FeatherItrem
   m_EditorClassIdentifier: 
   _itemName: Feather
+  material: 2
   _prefab: {fileID: 6550334488028484799, guid: 303dd06063ee0db42aef41c41c7a720b, type: 3}
   _throwSpeed: 3
   angularSpeed: 100

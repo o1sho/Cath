@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerVisualHandler : MonoBehaviour, IPlayerComponent
 {
+    private Player _player;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
@@ -12,6 +13,7 @@ public class PlayerVisualHandler : MonoBehaviour, IPlayerComponent
     private const string VELOCITY_Y = "velocityY";
 
     public void Init(Player player) {
+        _player = player;
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }

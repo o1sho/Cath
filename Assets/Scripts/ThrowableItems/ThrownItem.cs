@@ -1,21 +1,30 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ThrownItemRuntime))]
 public class ThrownItem : MonoBehaviour
 {
     private Camera _mainCamera;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
 
-    private IThrowableItem _sourceItem;
+    private IThrowableItem _source;
+    private ThrownItemRuntime _rt;
 
-    public void Init(IThrowableItem sourceItem) {
-        _sourceItem = sourceItem;
+    public void Init(IThrowableItem src) {
+        _source = src;
+        //if (_rt == null) {
+        //    _rt = GetComponent<ThrownItemRuntime>();
+        //}
+        //_rt.Init(src);
+        (_rt ??= GetComponent<ThrownItemRuntime>()).Init(src);
     }
 
     private void Awake() {
         _mainCamera = Camera.main;
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+
+        _rt = GetComponent<ThrownItemRuntime>();
     }
 
     private void Update() {
@@ -30,10 +39,8 @@ public class ThrownItem : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.TryGetComponent<IThrowableTarget>(out var target)) {
-            target.OnHitByItem(_sourceItem);
-            OnHit();
-        }
+        if (other.TryGetComponent<IThrownItemReactor>(out var reactor)) { reactor.OnThrownItemPassed(_rt); return; }
+        if (other.TryGetComponent<IThrownItemConsumer>(out var consumer)) { consumer.OnHitBy(_rt); OnHit(); return; }
     }
 
     private void OnHit() {

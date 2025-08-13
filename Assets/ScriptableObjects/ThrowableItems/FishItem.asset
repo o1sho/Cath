@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: FishItem
   m_EditorClassIdentifier: 
   _itemName: Fish
+  material: 2
   _prefab: {fileID: 6550334488028484799, guid: 2c3db48e80a407d43b1e731a0166037d, type: 3}
   _throwSpeed: 7
   angularSpeed: 360
   displaySprite: {fileID: -2194294483443767910, guid: 7a6bc63260905cd4fa3490c74617b0ad, type: 3}
+  reactions: []

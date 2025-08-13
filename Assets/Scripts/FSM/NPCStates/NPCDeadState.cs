@@ -5,8 +5,8 @@ public class NPCDeadState : NPCStateBase {
     public NPCDeadState(NPC npc) : base(npc) { }
 
     public override void Enter() {
-        _npc.Movement.SetMovementMode(NPCMovementHandler.MovementMode.Frozen);
-        _npc.Movement.Stop();
+        _npc.Movement?.SetMovementMode(NPCMovementHandler.MovementMode.Frozen);
+        _npc.Movement?.Stop();
 
         _npc.Drop?.DropItems();
 

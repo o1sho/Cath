@@ -13,6 +13,7 @@ public class NPC : StateMachine
     [SerializeField] private NPCDropHandler _drop;
     [SerializeField] private NPCAttackHandler _attack;
     [SerializeField] private NPCQuestSoupHandler _questSoup;
+    [SerializeField] private NPCFireReactorHandler _fireReactor;
 
     // Public access for handlers
     public NPCVisualHandler Visual => _visual;
@@ -23,6 +24,7 @@ public class NPC : StateMachine
     public NPCDropHandler Drop => _drop;
     public NPCAttackHandler Attack => _attack;
     public NPCQuestSoupHandler QuestSoup => _questSoup;
+    public NPCFireReactorHandler FireReactorHandler => _fireReactor;
     public NPCType Type => _type;
 
     // States
@@ -49,6 +51,7 @@ public class NPC : StateMachine
         _drop?.Init(this);
         _attack?.Init(this);
         _questSoup?.Init(this);
+        _fireReactor?.Init(this);
     }
 
     private void InitStates() {

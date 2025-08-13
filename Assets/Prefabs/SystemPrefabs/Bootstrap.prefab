@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerPrefab: {fileID: 7604794724699542787, guid: 35b3de10896fdbb448b51a5bd16d4b89, type: 3}
+  uiManagerPrefab: {fileID: 8631363621713716121, guid: 91f5860832503234999c863a23784149, type: 3}

@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5120689454354038812}
   - component: {fileID: 8858200600403549453}
+  - component: {fileID: 8928770592707824325}
   - component: {fileID: 3269051315065301262}
   - component: {fileID: 6748880902915945761}
   - component: {fileID: 2362145528939830997}
-  - component: {fileID: 8928770592707824325}
+  - component: {fileID: -4662486895986840919}
   m_Layer: 0
   m_Name: FeatherForThrowing
   m_TagString: Throwable
@@ -91,6 +92,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!95 &8928770592707824325
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6550334488028484799}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9fd0844fdf896614bbc7bf1272d44662, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &3269051315065301262
 Rigidbody2D:
   serializedVersion: 5
@@ -167,25 +190,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1314d0f36f03044798b2020e807ce46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &8928770592707824325
-Animator:
-  serializedVersion: 7
+--- !u!114 &-4662486895986840919
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6550334488028484799}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9fd0844fdf896614bbc7bf1272d44662, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c2369d54dd7c14e921087fc483f672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

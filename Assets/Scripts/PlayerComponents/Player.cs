@@ -15,6 +15,7 @@ public class Player : StateMachine
     [SerializeField] private PlayerGroundCheckHandler _groundCheck;
     [SerializeField] private PlayerVisualHandler _visual;
     [SerializeField] private PlayerHealthHandler _health;
+    [SerializeField] private PlayerHeldItemDisplayHandler _heldItemDisplay;
 
     private Rigidbody2D _rigidbody;
 
@@ -27,6 +28,7 @@ public class Player : StateMachine
     public PlayerGroundCheckHandler GroundCheck => _groundCheck;
     public PlayerVisualHandler Visual => _visual;
     public PlayerHealthHandler Health => _health;
+    public PlayerHeldItemDisplayHandler HeldItemDisplay => _heldItemDisplay;
     public Rigidbody2D Rigidbody => _rigidbody;
 
     // States
@@ -55,6 +57,7 @@ public class Player : StateMachine
         _throw?.Init(this);
         _groundCheck?.Init(this);
         _health?.Init(this);
+        _heldItemDisplay?.Init(this);
     }
 
     private void InitStates() {

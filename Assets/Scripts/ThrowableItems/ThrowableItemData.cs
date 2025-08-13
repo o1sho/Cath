@@ -3,8 +3,10 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemForThrowing", menuName = "ThrowableItems/ThrowableItemData")]
 public class ThrowableItemData : ScriptableObject, IThrowableItem {
-
+    
+    [Header("Item Properties")]
     [SerializeField] private string _itemName = "Item";
+    [SerializeField] private ItemMaterial material = ItemMaterial.Wood;
     [SerializeField] private GameObject _prefab;
     [SerializeField] private float _throwSpeed = 10f;
     [SerializeField] private float angularSpeed = 360f;
@@ -14,6 +16,7 @@ public class ThrowableItemData : ScriptableObject, IThrowableItem {
     [SerializeField] private List<NPCReactionEntry> reactions;
 
     public string Name => _itemName;
+    public ItemMaterial Material => material;
     public GameObject Prefab => _prefab;
     public float ThrowSpeed => _throwSpeed;
     public float AngularSpeed => angularSpeed;

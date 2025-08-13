@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StoneItem
   m_EditorClassIdentifier: 
   _itemName: Stone
+  material: 1
   _prefab: {fileID: 6550334488028484799, guid: 4740aa2ff272fb145a6d39d402678763, type: 3}
   _throwSpeed: 10
   angularSpeed: 500

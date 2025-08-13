@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MushroomItem
   m_EditorClassIdentifier: 
   _itemName: Mushroom
+  material: 2
   _prefab: {fileID: 6550334488028484799, guid: 6211d9a4a0b2cd346852c53b6d81b04d, type: 3}
   _throwSpeed: 7
   angularSpeed: 360

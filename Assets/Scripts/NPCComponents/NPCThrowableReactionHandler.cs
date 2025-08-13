@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowableTarget
+public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrownItemConsumer
 {
     private NPC _npc;
 
@@ -9,9 +9,16 @@ public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowa
         _npc = npc;
     }
 
-    public void OnHitByItem(IThrowableItem item) {
-        var reaction = item.GetReactionFor(_npc.Type);
+    public void OnHitBy(ThrownItemRuntime rt) {
+        if (rt == null) return;
 
+        if (_npc.Type == NPCType.Inanimate && _npc.name.Contains("Bush") && rt.Has(ThrownModifier.Fire)) {
+            _npc.ChangeState(_npc.DeadState);
+            return;
+        }
+
+        //вызывается если нет никаких кастомных реакторов. Реакция берется из свойств летящего предмета
+        var reaction = rt.SourceItem?.GetReactionFor(_npc.Type);
         switch (reaction) {
             case ItemReactionType.Stun:
                 //_npc.ChangeState(_npc.StunnedState);
@@ -28,24 +35,24 @@ public class NPCThrowableReactionHandler : MonoBehaviour, INPCComponent, IThrowa
 
             case ItemReactionType.GiveItem:
                 _npc.ChangeState(_npc.DeadState);
-                Debug.Log($"{_npc.name} принял предмет: {item.Name}");
+                Debug.Log($"{_npc.name} принял предмет: {rt.SourceItem.Name}");
                 break;
 
             case ItemReactionType.QuestTrigger:
-                Debug.Log($"Квест активирован через {item.Name}");
+                Debug.Log($"Квест активирован через {rt.SourceItem.Name}");
                 if (_npc.name == "SoupContainer") {
-                    _npc.QuestSoup.IngredientHasBeenAdded(item);
+                    _npc.QuestSoup.IngredientHasBeenAdded(rt.SourceItem);
                 }
                 break;
 
             case ItemReactionType.StartMoving:
                 _npc.ChangeState(_npc.PatrolState);
-                Debug.Log($"{_npc.name} проснулся и начал движение от попадания {item.Name}");
+                Debug.Log($"{_npc.name} проснулся и начал движение от попадания {rt.SourceItem.Name}");
                 break;
 
             case ItemReactionType.None:
             default:
-                Debug.Log($"{_npc.name} не отреагировал на {item.Name}");
+                Debug.Log($"{_npc.name} не отреагировал на {rt.SourceItem.Name}");
                 break;
         }
     }
