@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(ThrownItemRuntime))]
@@ -9,6 +10,8 @@ public class ThrownItem : MonoBehaviour
 
     private IThrowableItem _source;
     private ThrownItemRuntime _rt;
+
+    public event Action Hit;
 
     public void Init(IThrowableItem src) {
         _source = src;
@@ -45,7 +48,7 @@ public class ThrownItem : MonoBehaviour
 
     private void OnHit() {
         if (_animator.isActiveAndEnabled) {
-            _animator.SetTrigger("isDestroy");
+            Hit?.Invoke();
             _rigidbody.linearVelocity = Vector2.zero;
             _rigidbody.angularVelocity = 0;
         }

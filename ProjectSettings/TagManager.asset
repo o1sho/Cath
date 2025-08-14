@@ -54,6 +54,9 @@ TagManager:
   - name: Decor
     uniqueID: 3347214207
     locked: 0
+  - name: Shadows
+    uniqueID: 2450674367
+    locked: 0
   - name: Environment
     uniqueID: 3798084171
     locked: 0

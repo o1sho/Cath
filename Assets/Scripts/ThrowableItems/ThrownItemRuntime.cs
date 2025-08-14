@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -12,10 +13,12 @@ public enum ThrownModifier {
 public class ThrownItemRuntime : MonoBehaviour
 {
     private readonly List<ThrownModifier> _mods = new();
-    public IReadOnlyList<ThrownModifier> Mods => _mods;
 
+    public IReadOnlyList<ThrownModifier> Mods => _mods;
     public IThrowableItem SourceItem { get; private set; }
     public ItemMaterial Material { get; private set; }
+
+    public event Action<ThrownModifier> ModifierAdded;
 
 
     public void Init(IThrowableItem source) {
@@ -28,5 +31,6 @@ public class ThrownItemRuntime : MonoBehaviour
     public void Add(ThrownModifier m) {
         if (m == ThrownModifier.None || _mods.Contains(m)) return;
         _mods.Add(m);
+        ModifierAdded?.Invoke(m);
     }
 }

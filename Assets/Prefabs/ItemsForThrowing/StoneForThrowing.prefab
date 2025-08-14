@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6748880902915945761}
   - component: {fileID: 2362145528939830997}
   - component: {fileID: -2306765422973821369}
+  - component: {fileID: -7644027907659285820}
   m_Layer: 0
   m_Name: StoneForThrowing
   m_TagString: Throwable
@@ -202,3 +203,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c2369d54dd7c14e921087fc483f672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7644027907659285820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6550334488028484799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6b2d46afef2274aa2dd202b2ead444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireFX: {fileID: 0}
+  animator: {fileID: 8928770592707824325}
