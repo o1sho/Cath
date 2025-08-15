@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerStateBase {
             return;
         }
 
-        if (_player.Dash.CanDash && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame() && _player.Movement.InputVector.magnitude > 0) {
+        if (_player.Abilities.Can(Ability.Dash) && _player.Dash.CanDash && GameInput.Instance.InputSystem.Player.Dash.WasPressedThisFrame() && _player.Movement.InputVector.magnitude > 0) {
             _player.ChangeState(_player.DashingState);
             return;
         }

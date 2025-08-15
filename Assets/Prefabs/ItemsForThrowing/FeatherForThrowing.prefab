@@ -216,4 +216,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireFX: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 8928770592707824325}

@@ -9,6 +9,7 @@ public class Player : StateMachine
     [SerializeField] private Vector3 currentSpawnPoint;
 
     [Header("Handlers")]
+    [SerializeField] private PlayerAbilitiesHandler _abilities;
     [SerializeField] private PlayerMovementHandler _movement;
     [SerializeField] private PlayerDashHandler _dash;
     [SerializeField] private PlayerThrowHandler _throw;
@@ -22,6 +23,7 @@ public class Player : StateMachine
     public Vector3 CurrentSpawnPoint { get => currentSpawnPoint; set => currentSpawnPoint = value; }
 
     // Public access for handlers
+    public PlayerAbilitiesHandler Abilities => _abilities;
     public PlayerMovementHandler Movement => _movement;
     public PlayerDashHandler Dash => _dash;
     public PlayerThrowHandler Throw => _throw;
@@ -51,6 +53,7 @@ public class Player : StateMachine
 
     //----------------------------------------------------
     private void InitHandlers() {
+        _abilities?.Init(this);
         _visual?.Init(this);
         _movement?.Init(this);
         _dash?.Init(this);
