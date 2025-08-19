@@ -20,7 +20,6 @@ public class PlayerGroundCheckHandler : MonoBehaviour, IPlayerComponent {
         _player = player;
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag(groundTag))
             _isGround = true;
@@ -43,4 +42,8 @@ public class PlayerGroundCheckHandler : MonoBehaviour, IPlayerComponent {
         }
     }
 
+    public void ResetGroundChecker() {
+        _isGround = true;
+        _isGroundForRiding = false;
+    }
 }

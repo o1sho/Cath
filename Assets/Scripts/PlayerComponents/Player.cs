@@ -100,6 +100,7 @@ public class Player : StateMachine
         transform.position = currentSpawnPoint;
 
         _visual?.ResetAllAnimationStates();
+        _groundCheck?.ResetGroundChecker();
         _movement?.ResetVelocity();
         _dash?.ResetCooldown();
         _throw?.ClearHeldItem();

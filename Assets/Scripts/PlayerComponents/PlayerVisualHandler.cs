@@ -63,4 +63,8 @@ public class PlayerVisualHandler : MonoBehaviour, IPlayerComponent
         _animator.SetBool("isPickup", false);
         _animator.SetBool("isMoving", false);
     }
+
+    public void RespawnPlayerForAnimation() {
+        _player.Respawn();
+    }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerFallState : PlayerStateBase {
     public PlayerFallState(Player player) : base(player) { }
 
-    private float _fallTimer = 0.8f;
+    //private float _fallTimer = 0.8f;
 
     public override void Enter() {
         Debug.Log("Player entered Fall state");
@@ -14,11 +14,11 @@ public class PlayerFallState : PlayerStateBase {
     }
 
     public override void Update(float deltaTime) {
-        _fallTimer -= deltaTime;
-        if (_fallTimer < 0) {
-            _player.Respawn();
-            _player.ChangeState(_player.IdleState);
-        }
+        //_fallTimer -= deltaTime;
+        //if (_fallTimer < 0) {
+        //    _player.Respawn();
+        //    _player.ChangeState(_player.IdleState);
+        //}
     }
 
     public override void Exit() {
