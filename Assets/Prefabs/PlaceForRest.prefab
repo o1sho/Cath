@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -496883125
-  m_SortingLayer: -1
+  m_SortingLayerID: -947753089
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: -7593389055599273749, guid: 3a091cbc2c9899c40b5e243252f4e786, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -459,7 +459,7 @@ GameObject:
   m_Layer: 0
   m_Name: PlaceForRest
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

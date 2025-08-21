@@ -11,7 +11,8 @@ public class PlayerDeadState : PlayerStateBase {
 
         Debug.Log("Player entered Dead state");
 
-        GameManager.Instance.ReloadActiveScene();
+        _player.Respawn();
+        //GameManager.Instance.ReloadActiveScene();
     }
 
     public override void Update(float deltaTime) {

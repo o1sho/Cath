@@ -26,12 +26,16 @@ public class PlayerSpawnController : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
-        _lastActiveSpawn = null;
+        if (collision.CompareTag("Player")) {
+            _lastActiveSpawn = null;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        _respawnTimer = _timeToRespawn;
-        _lastActiveSpawn = this;
+        if (collision.CompareTag("Player")) {
+            _respawnTimer = _timeToRespawn;
+            _lastActiveSpawn = this;
+        }
     }
 
     private void Update() {
