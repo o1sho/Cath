@@ -23,12 +23,18 @@ public class NPCVisualHandler : MonoBehaviour, INPCComponent
     public void SetFacingDirection(Vector2 direction) {
         //_animator.SetFloat("FacingX", direction.x);
         //_animator.SetFloat("FacingY", direction.y);
+        if (_npc.Type == NPCType.Enemy) {
+            if (direction.y > 0.1f) _spriteRenderer.flipX = false;
+            else if (direction.y < -0.1f) _spriteRenderer.flipX = true;
 
-        if (direction.y > 0.1f) _spriteRenderer.flipX = false;
-        else if (direction.y < -0.1f) _spriteRenderer.flipX = true;
+            if (direction.x > 0.1f) _spriteRenderer.flipY = true;
+            else if (direction.x < -0.1f) _spriteRenderer.flipY = false;
+        }
 
-        if (direction.x > 0.1f) _spriteRenderer.flipY = true;
-        else if (direction.x < -0.1f) _spriteRenderer.flipY = false;
+        if (_npc.Type == NPCType.Platform) {
+            if (direction.y > 0.1f) _spriteRenderer.flipY = false;
+            else if (direction.y < -0.1f) _spriteRenderer.flipY = true;
+        }
     }
 
     public void TriggerAttackAnimation() {

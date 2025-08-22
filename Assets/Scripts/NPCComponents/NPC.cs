@@ -67,7 +67,17 @@ public class NPC : StateMachine
         InitHandlers();
         InitStates();
 
-        ChangeState(_type == NPCType.Enemy ? _patrolState : _idleState);
+        switch (_type) {
+            case NPCType.Enemy:
+                ChangeState(PatrolState);
+                break;
+            case NPCType.Platform:
+                ChangeState(PatrolState);
+                break;
+            default:
+                ChangeState(IdleState);
+                break;
+        }
     }
 
     public void DestroySelf() {
