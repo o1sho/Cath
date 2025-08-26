@@ -43,7 +43,16 @@ public class ThrownItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.TryGetComponent<IThrownItemReactor>(out var reactor)) { reactor.OnThrownItemPassed(_rt); return; }
-        if (other.TryGetComponent<IThrownItemConsumer>(out var consumer)) { consumer.OnHitBy(_rt); OnHit(); return; }
+        if (other.TryGetComponent<IThrownItemConsumer>(out var consumer)) {
+            var outcome = consumer.OnHitBy(_rt);
+            if (outcome == HitOutcome.DestroyProjectile) {
+                OnHit();
+            }
+            if (outcome == HitOutcome.ContinueFlight) {
+
+            }
+            return; 
+        }
     }
 
     private void OnHit() {

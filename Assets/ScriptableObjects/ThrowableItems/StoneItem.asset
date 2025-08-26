@@ -23,3 +23,5 @@ MonoBehaviour:
     reaction: 0
   - npcType: 0
     reaction: 4
+  - npcType: 4
+    reaction: 7

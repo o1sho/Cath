@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class NPCVisualHandler : MonoBehaviour, INPCComponent
 {
+    [SerializeField] private Sprite onHitSprite;
+
     private NPC _npc;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+    private SpriteAnimator _spriteAnimator;
 
     //---------------
     public void Init(NPC npc) {
         _npc = npc;
         if (_animator == null) _animator = GetComponent<Animator>();
         if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteAnimator == null) _spriteAnimator = GetComponent<SpriteAnimator>();
     }
     //---------------
 
@@ -51,5 +55,13 @@ public class NPCVisualHandler : MonoBehaviour, INPCComponent
 
     public void DisplayHandler(bool v) {
         _spriteRenderer.enabled = v;
+    }
+
+    public void SpriteAnimatorHandler(bool v) {
+        if (_spriteAnimator != null) _spriteAnimator.enabled = v;
+    }
+
+    public void OnHitDisplay() {
+        _spriteRenderer.sprite = onHitSprite;
     }
 }

@@ -5,5 +5,6 @@ public enum ItemReactionType {
     OpenDialogue,
     GiveItem,
     StartMoving,
-    QuestTrigger
+    QuestTrigger,
+    Hide
 }

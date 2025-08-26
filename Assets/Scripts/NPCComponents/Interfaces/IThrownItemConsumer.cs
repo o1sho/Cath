@@ -1,6 +1,11 @@
 //Это получатель удара реагирует на предмет с учётом его свойств
 
+public enum HitOutcome {
+    DestroyProjectile, //уничтожаем
+    ContinueFlight // пролетает дальше
+}
+
 public interface IThrownItemConsumer
 {
-    void OnHitBy(ThrownItemRuntime rt); // реагирует при УДАРЕ, с учётом модификаторов
+    HitOutcome OnHitBy(ThrownItemRuntime rt); // реагирует при УДАРЕ, с учётом модификаторов
 }
