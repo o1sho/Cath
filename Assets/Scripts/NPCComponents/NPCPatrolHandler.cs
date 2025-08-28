@@ -40,7 +40,7 @@ public class NPCPatrolHandler : MonoBehaviour, INPCComponent
             _npc.Movement.SetOverrideVelocity(Vector2.zero);
             _waitTimer -= deltaTime;
 
-            if (_npc.Type != NPCType.Platform) _npc.Visual.DisplayHandler(false);
+            if (_npc.Type == NPCType.Enemy_Water) _npc.Visual.DisplayHandler(false);
 
             if (_waitTimer <= 0f) {
                 _waiting = false;

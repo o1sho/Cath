@@ -48,7 +48,7 @@ public class NPCQuestSoupHandler : MonoBehaviour, INPCComponent
         yield return new WaitForSeconds(timerBeforeStart);
 
         // 2. Погода
-        // WeatherManager.Instance.SetStorm(true);
+        WeatherManager.Instance.SetStorm(true);
 
         // 3. Изменение параметров игрока
         // Player.Instance.SomeStat.AddDebuff(...);
